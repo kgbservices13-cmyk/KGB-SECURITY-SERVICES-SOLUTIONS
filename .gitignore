@@ -1,5 +1,6 @@
-# build output
-dist/
+# build output — committed so Cloudflare can deploy without a build step
+# (see README: build command can be left empty)
+# dist/
 # generated types
 .astro/
 

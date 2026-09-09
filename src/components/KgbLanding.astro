@@ -52,6 +52,11 @@ const serviceOptions = [
   "Inspección especializada",
   "Necesito orientación",
 ];
+
+const whatsappNumber = "593985511942";
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  "Hola KGB Security, quisiera solicitar una cotización.",
+)}`;
 ---
 
 <BaseLayout
@@ -74,8 +79,8 @@ const serviceOptions = [
           {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
         </div>
         <div class="header-actions">
-          <a class="header-phone" href="tel:+593985511942">098 551 1942</a>
-          <a class="header-cta" href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
+          <a class="header-phone" href={whatsappUrl} target="_blank" rel="noopener">098 551 1942</a>
+          <a class="header-cta" href={whatsappUrl} target="_blank" rel="noopener">Solicitar cotización <span aria-hidden="true">↗</span></a>
         </div>
       </nav>
     </header>
@@ -219,7 +224,7 @@ const serviceOptions = [
           </div>
         </div>
 
-        <form class="contact-form" id="contact-form" data-reveal style="--reveal-delay: 90ms">
+        <form class="contact-form" id="contact-form" data-reveal data-whatsapp={whatsappNumber} style="--reveal-delay: 90ms">
           <div class="form-heading"><strong>Solicitar una evaluación</strong><span>Te responderemos con los siguientes pasos.</span></div>
           <div class="form-field">
             <label for="name">Nombre de contacto</label>
@@ -254,7 +259,7 @@ const serviceOptions = [
       </a>
       <div class="footer-links">
         <a href="https://www.instagram.com/kgbsecurityservices" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-        <a href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
+        <a href={whatsappUrl} target="_blank" rel="noopener">Solicitar cotización <span aria-hidden="true">↗</span></a>
       </div>
       <p class="footer-legal">Seguridad integral para importación y exportación · © {new Date().getFullYear()} KGB Security Services & Solutions</p>
     </footer>
@@ -302,7 +307,21 @@ const serviceOptions = [
 
   contactForm?.addEventListener("submit", (event) => {
     event.preventDefault();
-    formStatus && (formStatus.textContent = "Gracias. Revisaremos los detalles de tu operación.");
+
+    const whatsappNumber = contactForm.dataset.whatsapp || "593985511942";
+    const data = new FormData(contactForm);
+    const lines = [
+      "Hola KGB Security, quiero solicitar una cotización.",
+      "",
+      `Nombre: ${data.get("name") || "-"}`,
+      `Empresa: ${data.get("company") || "-"}`,
+      `Servicio: ${data.get("service") || "-"}`,
+      `Contexto: ${data.get("message") || "-"}`,
+    ];
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
+
+    formStatus && (formStatus.textContent = "Abriendo WhatsApp para enviar tu solicitud…");
+    window.open(whatsappUrl, "_blank", "noopener");
     contactForm.reset();
   });
 </script>

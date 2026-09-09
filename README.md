@@ -37,7 +37,31 @@ npm run build
 
 El resultado se genera en `dist/`.
 
-## Despliegue en Cloudflare Pages (recomendado)
+## Despliegue en Cloudflare Workers (configuración actual)
+
+El repositorio incluye `wrangler.jsonc` (sirve `./dist` como Workers static
+assets) y la carpeta `dist/` **ya construida y versionada**. Cloudflare solo
+tiene que publicarla, sin compilar:
+
+| Opción del proyecto        | Valor                |
+| :------------------------- | :------------------- |
+| Comando de compilación     | *(vacío)*            |
+| Implementar comando        | `npx wrangler deploy`|
+| Directorio raíz            | `/`                  |
+
+**Cada vez que cambies el sitio**, reconstruye y sube `dist/`:
+
+```bash
+npm install
+npm run build
+git add dist && git commit -m "build: actualizar dist" && git push
+```
+
+Si más adelante quieres que Cloudflare compile solo (necesita Node 22 en su
+entorno), pon `npm run build` como comando de compilación y añade la variable
+`NODE_VERSION=22.12.0`.
+
+## Despliegue en Cloudflare Pages (alternativa)
 
 Cloudflare construye el sitio en la nube, así que no necesitas Node instalado en tu
 equipo para publicar.

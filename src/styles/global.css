@@ -687,6 +687,11 @@ main,
   color: var(--blue);
 }
 
+.contact-detail-list {
+  display: grid;
+  gap: 6px;
+}
+
 .coverage-copy > p:not(.kicker) {
   margin-bottom: 30px;
 }

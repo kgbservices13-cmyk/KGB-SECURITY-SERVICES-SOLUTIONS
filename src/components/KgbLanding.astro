@@ -350,23 +350,30 @@ const contact = {
       "",
       "Me gustaría solicitar información sobre sus servicios.",
       "",
-      `Nombre de contacto: ${name}`,
-      `Empresa: ${company}`,
-      `Servicio requerido: ${service}`,
+      `Nombre de contacto: ${name || "No especificado"}`,
+      `Empresa: ${company || "No especificada"}`,
+      `Servicio requerido: ${service || "No especificado"}`,
       "",
       "Contexto de la operación:",
-      message,
-    ].join("\n");
-    const mailtoParams = new URLSearchParams({
-      cc: managementEmail,
-      subject,
-      body,
-    });
+      message || "No especificado",
+    ].join("\r\n");
+
+    // mailto: usa la codificación de RFC 6068 (percent-encoding), no la de
+    // application/x-www-form-urlencoded que emplea URLSearchParams — esta
+    // última convierte los espacios en "+" y los clientes de correo no los
+    // interpretan, mostrando el texto con "+" en vez de espacios.
+    const mailtoParams = [
+      ["cc", managementEmail],
+      ["subject", subject],
+      ["body", body],
+    ]
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
 
     if (formStatus) {
       formStatus.textContent = "Abriendo tu correo para completar el envío…";
     }
 
-    window.location.href = `mailto:${commercialEmail}?${mailtoParams.toString()}`;
+    window.location.href = `mailto:${commercialEmail}?${mailtoParams}`;
   });
 </script>

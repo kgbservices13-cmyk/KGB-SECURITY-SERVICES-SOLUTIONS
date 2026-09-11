@@ -91,7 +91,10 @@ const contact = {
           {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
         </div>
         <div class="header-actions">
-          <a class="header-phone" href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer">WhatsApp {contact.whatsappPrimary.display}</a>
+          <span class="header-contact">
+            <span class="header-contact-label">Contacto</span>
+            <a class="header-phone" href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer">{contact.whatsappPrimary.display}</a>
+          </span>
           <a class="header-cta" href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
         </div>
       </nav>

@@ -196,8 +196,21 @@ main,
   display: block;
 }
 
-.header-phone {
+.header-contact {
   display: none;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.header-contact-label {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.header-phone {
   color: var(--ink);
   font-size: 0.77rem;
   font-weight: 700;
@@ -1241,8 +1254,8 @@ main,
     gap: 22px;
   }
 
-  .header-phone {
-    display: inline;
+  .header-contact {
+    display: inline-flex;
   }
 
   .hero {

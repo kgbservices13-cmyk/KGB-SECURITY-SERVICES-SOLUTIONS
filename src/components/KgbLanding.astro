@@ -38,6 +38,29 @@ const serviceGroups = [
   },
 ];
 
+const serviceGallery = [
+  {
+    label: "02 · Seguridad electrónica",
+    src: "/assets/servicio-centro-monitoreo.webp",
+    alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.",
+  },
+  {
+    label: "03 · Inspección y verificación de contenedores",
+    src: "/assets/servicio-inspeccion-contenedores.webp",
+    alt: "Personal KGB con chaleco, linterna y tableta inspeccionando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores.",
+  },
+  {
+    label: "04 · Unidad canina K9",
+    src: "/assets/servicio-unidad-canina.webp",
+    alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas.",
+  },
+  {
+    label: "04 · Poligrafía",
+    src: "/assets/servicio-poligrafia.webp",
+    alt: "Examen de poligrafía en una oficina con una examinadora KGB tomando notas. Mensaje: La confianza se gana. La verdad se comprueba.",
+  },
+];
+
 const operationSteps = [
   { phase: "Antes", title: "Evaluamos", detail: "Entendemos la mercancía, la ruta y los puntos que requieren atención." },
   { phase: "Antes", title: "Preparamos", detail: "Definimos personal, tecnología y protocolos según el alcance acordado." },
@@ -166,6 +189,17 @@ const contact = {
               </div>
               <a href="#contact" aria-label={`Solicitar información sobre ${service.name}`}>Consultar <span aria-hidden="true">↗</span></a>
             </article>
+          ))}
+        </div>
+
+        <div class="service-gallery" aria-label="Servicios en operación">
+          {serviceGallery.map((item, index) => (
+            <figure class="service-shot" data-reveal style={`--reveal-delay: ${(index % 2) * 70}ms`}>
+              <div class="service-shot-frame">
+                <img src={item.src} alt={item.alt} width="1192" height="1191" loading="lazy" decoding="async" />
+              </div>
+              <figcaption>{item.label}</figcaption>
+            </figure>
           ))}
         </div>
       </section>

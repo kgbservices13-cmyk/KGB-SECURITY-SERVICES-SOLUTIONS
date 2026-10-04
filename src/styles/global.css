@@ -422,10 +422,10 @@ main,
 
 .hero-image-frame img {
   width: 100%;
-  aspect-ratio: 0.86 / 1;
-  object-fit: cover;
-  object-position: 82% center;
-  filter: saturate(0.95) contrast(1.03);
+  display: block;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
 .hero-image-note {

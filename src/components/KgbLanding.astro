@@ -70,6 +70,17 @@ const processGallery = [
   },
 ];
 
+const serviceSlides = serviceGroups.flatMap((service, serviceIndex) =>
+  service.media.map((image, part) => ({
+    ...service,
+    image,
+    serviceIndex,
+    part: part + 1,
+    parts: service.media.length,
+  })),
+);
+const firstSlideOf = serviceGroups.map((_, serviceIndex) => serviceSlides.findIndex((slide) => slide.serviceIndex === serviceIndex));
+
 const operationSteps = [
   { phase: "Antes", title: "Evaluamos", detail: "Entendemos la mercancía, la ruta y los puntos que requieren atención." },
   { phase: "Antes", title: "Preparamos", detail: "Definimos personal, tecnología y protocolos según el alcance acordado." },
@@ -185,42 +196,40 @@ const contact = {
         </div>
 
         <div class="svc-tabs" data-svc-tabs>
-          <div class="svc-nav" role="tablist" aria-label="Servicios de KGB">
+          <div class="svc-nav" aria-label="Ir a un servicio">
             {serviceGroups.map((service, index) => (
-              <button
-                class="svc-tab"
-                type="button"
-                role="tab"
-                id={`svc-tab-${index}`}
-                aria-controls={`svc-panel-${index}`}
-                aria-selected={index === 0 ? "true" : "false"}
-                tabindex={index === 0 ? 0 : -1}
-              >
+              <button class="svc-tab" type="button" data-slide={firstSlideOf[index]} aria-current={index === 0 ? "true" : undefined}>
                 <span class="svc-tab-num">{service.number}</span>
                 <span class="svc-tab-text"><small>{service.title}</small><strong>{service.name}</strong></span>
               </button>
             ))}
           </div>
 
-          <div class="svc-stage">
-            {serviceGroups.map((service, index) => (
-              <article class="svc-panel" role="tabpanel" id={`svc-panel-${index}`} aria-labelledby={`svc-tab-${index}`} tabindex="0">
-                <div class={`svc-media svc-media-${service.media.length}`}>
-                  {service.media.map((image) => (
+          <div class="svc-carousel" role="region" aria-roledescription="carrusel" aria-label="Servicios de KGB">
+            <div class="svc-stage" tabindex="0">
+              {serviceSlides.map((slide, index) => (
+                <article class="svc-panel" role="group" aria-roledescription="diapositiva" aria-label={`${index + 1} de ${serviceSlides.length}`} data-service={slide.serviceIndex}>
+                  <div class="svc-media">
                     <div class="service-shot-frame">
-                      <img src={image.src} alt={image.alt} width="1192" height="1191" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                      <img src={slide.image.src} alt={slide.image.alt} width="1192" height="1191" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
                     </div>
-                  ))}
-                </div>
-                <div class="svc-detail">
-                  <p class="svc-eyebrow">{service.number} · {service.title}</p>
-                  <h3>{service.name}</h3>
-                  <p class="svc-summary">{service.summary}</p>
-                  <p class="svc-scope">{service.scope}</p>
-                  <a class="text-link" href="#contact" aria-label={`Solicitar información sobre ${service.name}`}>Consultar este servicio <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-            ))}
+                  </div>
+                  <div class="svc-detail">
+                    <p class="svc-eyebrow">{slide.number} · {slide.title}{slide.parts > 1 ? ` · ${slide.part}/${slide.parts}` : ""}</p>
+                    <h3>{slide.name}</h3>
+                    <p class="svc-summary">{slide.summary}</p>
+                    <p class="svc-scope">{slide.scope}</p>
+                    <a class="text-link" href="#contact" aria-label={`Solicitar información sobre ${slide.name}`}>Consultar este servicio <span aria-hidden="true">↗</span></a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div class="svc-controls">
+              <button class="svc-arrow" type="button" data-dir="-1" aria-label="Servicio anterior"><span aria-hidden="true">←</span></button>
+              <span class="svc-counter" aria-live="polite"><strong data-svc-current>01</strong> / {String(serviceSlides.length).padStart(2, "0")}</span>
+              <button class="svc-arrow" type="button" data-dir="1" aria-label="Servicio siguiente"><span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </div>
       </section>
@@ -375,42 +384,73 @@ const contact = {
 
 <script>
   const svcRoot = document.querySelector<HTMLElement>("[data-svc-tabs]");
+  const svcStage = svcRoot?.querySelector<HTMLElement>(".svc-stage");
 
-  if (svcRoot) {
+  if (svcRoot && svcStage) {
     const tabs = Array.from(svcRoot.querySelectorAll<HTMLButtonElement>(".svc-tab"));
-    const panels = Array.from(svcRoot.querySelectorAll<HTMLElement>(".svc-panel"));
+    const slides = Array.from(svcStage.querySelectorAll<HTMLElement>(".svc-panel"));
+    const counter = svcRoot.querySelector<HTMLElement>("[data-svc-current]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let current = 0;
+    let autoplay: number | undefined;
 
-    const select = (index: number, focus = false) => {
-      tabs.forEach((tab, i) => {
-        const active = i === index;
-        tab.setAttribute("aria-selected", String(active));
-        tab.tabIndex = active ? 0 : -1;
-        panels[i].hidden = !active;
-      });
-      if (focus) tabs[index].focus();
+    let touching = false;
+    let settle: number | undefined;
+
+    const goTo = (index: number) => {
+      const target = (index + slides.length) % slides.length;
+      const left = target * svcStage.clientWidth;
+      svcStage.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
+      // Some browsers drop a smooth scroll that starts right after another; land it if so.
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        if (!touching && Math.abs(svcStage.scrollLeft - left) > 2) svcStage.scrollTo({ left, behavior: "auto" });
+      }, 1000);
     };
 
-    tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => select(index));
-      tab.addEventListener("keydown", (event) => {
-        const last = tabs.length - 1;
-        const keys: Record<string, number> = {
-          ArrowDown: index === last ? 0 : index + 1,
-          ArrowRight: index === last ? 0 : index + 1,
-          ArrowUp: index === 0 ? last : index - 1,
-          ArrowLeft: index === 0 ? last : index - 1,
-          Home: 0,
-          End: last,
-        };
-        if (event.key in keys) {
-          event.preventDefault();
-          select(keys[event.key], true);
-        }
+    const sync = () => {
+      const index = Math.round(svcStage.scrollLeft / svcStage.clientWidth);
+      if (index === current || index < 0 || index >= slides.length) return;
+      current = index;
+      const service = slides[index].dataset.service;
+      tabs.forEach((tab, i) => {
+        if (String(i) === service) tab.setAttribute("aria-current", "true");
+        else tab.removeAttribute("aria-current");
       });
-    });
+      if (counter) counter.textContent = String(index + 1).padStart(2, "0");
+    };
 
-    svcRoot.dataset.ready = "true";
-    select(0);
+    const stopAutoplay = () => {
+      if (autoplay) window.clearInterval(autoplay);
+      autoplay = undefined;
+    };
+
+    svcStage.addEventListener("scroll", sync, { passive: true });
+
+    tabs.forEach((tab) => tab.addEventListener("click", () => { stopAutoplay(); goTo(Number(tab.dataset.slide)); }));
+    svcRoot.querySelectorAll<HTMLButtonElement>(".svc-arrow").forEach((button) => {
+      button.addEventListener("click", () => { stopAutoplay(); goTo(current + Number(button.dataset.dir)); });
+    });
+    svcStage.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        event.preventDefault();
+        stopAutoplay();
+        goTo(current + (event.key === "ArrowRight" ? 1 : -1));
+      }
+    });
+    svcStage.addEventListener("pointerdown", () => { touching = true; stopAutoplay(); });
+    window.addEventListener("pointerup", () => { touching = false; });
+    window.addEventListener("pointercancel", () => { touching = false; });
+    svcStage.addEventListener("focusin", stopAutoplay);
+    window.addEventListener("resize", () => svcStage.scrollTo({ left: current * svcStage.clientWidth, behavior: "auto" }));
+
+    // Gentle autoplay while the carousel is on screen; any interaction stops it for good.
+    if (!reduceMotion) {
+      new IntersectionObserver(([entry]) => {
+        stopAutoplay();
+        if (entry.isIntersecting) autoplay = window.setInterval(() => goTo(current + 1), 7000);
+      }, { threshold: 0.6 }).observe(svcStage);
+    }
   }
 </script>
 

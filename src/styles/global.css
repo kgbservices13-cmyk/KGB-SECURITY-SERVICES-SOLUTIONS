@@ -944,13 +944,6 @@ main,
 }
 
 /* Service posters: finished pieces with their own text, so never cropped. */
-.service-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  margin-top: 56px;
-}
-
 .service-shot {
   width: min(100%, 300px);
   min-width: 0;
@@ -975,6 +968,184 @@ main,
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* Services: tabbed selector, one uncropped poster per service. */
+.svc-tabs {
+  display: grid;
+  gap: 24px;
+}
+
+.svc-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.svc-tab {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 12px 13px;
+  border: 1px solid var(--line);
+  border-top: 3px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.svc-tab:hover {
+  background: var(--white);
+}
+
+.svc-tab:focus-visible,
+.svc-panel:focus-visible {
+  outline: 2px solid var(--blue-deep);
+  outline-offset: 2px;
+}
+
+.svc-tab[aria-selected="true"] {
+  border-top-color: var(--yellow);
+  background: var(--white);
+}
+
+.svc-tab-num {
+  color: var(--blue-deep);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.svc-tab-text small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.svc-tab-text strong {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+.svc-panel {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
+.svc-panel[hidden] {
+  display: none;
+}
+
+.svc-tabs[data-ready] .svc-panel:not([hidden]) {
+  animation: svc-in 0.35s var(--ease-out);
+}
+
+.svc-media {
+  display: grid;
+  gap: 12px;
+  width: min(100%, 400px);
+}
+
+.svc-media-3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.svc-media-3 > :first-child {
+  grid-column: 1 / -1;
+}
+
+.svc-eyebrow {
+  margin: 0 0 10px;
+  color: var(--blue-deep);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.svc-detail h3 {
+  margin: 0 0 14px;
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.svc-summary {
+  max-width: 440px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.svc-scope {
+  margin: 0 0 22px;
+  color: var(--blue-deep);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+@keyframes svc-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-tabs[data-ready] .svc-panel:not([hidden]) {
+    animation: none;
+  }
+}
+
+@media (min-width: 761px) {
+  .svc-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .svc-panel {
+    grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 64px);
+  }
+}
+
+@media (min-width: 1041px) {
+  .svc-tabs {
+    grid-template-columns: 330px minmax(0, 1fr);
+    gap: clamp(36px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .svc-nav {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .svc-tab {
+    padding: 20px 14px 20px 16px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-left: 4px solid transparent;
+  }
+
+  .svc-tab[aria-selected="true"] {
+    border-left-color: var(--yellow);
+  }
+
+  .svc-tab-text strong {
+    font-size: 1rem;
+  }
 }
 
 /* Poster galleries: tiles stay square and never exceed 300px. */
@@ -1025,13 +1196,6 @@ main,
 }
 
 @media (min-width: 761px) {
-  .service-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 36px 28px;
-    width: min(100%, 640px);
-    margin-inline: auto;
-  }
-
   .service-shot {
     width: 100%;
   }
@@ -1043,12 +1207,6 @@ main,
 }
 
 @media (min-width: 1041px) {
-  .service-gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px 28px;
-    width: min(100%, 940px);
-  }
-
   .process-gallery {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 28px;

@@ -14,6 +14,9 @@ const serviceGroups = [
     name: "Seguridad física",
     summary: "Personal preparado para controlar accesos, vigilar instalaciones y responder ante incidentes.",
     scope: "Control de accesos · rondas · prevención",
+    media: [
+      { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
+    ],
   },
   {
     number: "02",
@@ -21,6 +24,9 @@ const serviceGroups = [
     name: "Seguridad electrónica",
     summary: "Cámaras, alarmas y monitoreo para mantener los puntos críticos bajo observación.",
     scope: "Cámaras · sensores · monitoreo",
+    media: [
+      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea." },
+    ],
   },
   {
     number: "03",
@@ -28,6 +34,9 @@ const serviceGroups = [
     name: "Custodias para importación y exportación",
     summary: "Acompañamiento coordinado para proteger la carga durante el tránsito y el almacenamiento.",
     scope: "Custodias armadas · fluviales · rutas",
+    media: [
+      { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta inspeccionando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores." },
+    ],
   },
   {
     number: "04",
@@ -35,39 +44,11 @@ const serviceGroups = [
     name: "Servicios complementarios",
     summary: "Controles adicionales para operaciones que requieren una revisión más precisa.",
     scope: "K9 · sustancias fiscalizadas · poligrafía",
-  },
-];
-
-const serviceGallery = [
-  {
-    label: "01 · Protección en sitio",
-    src: "/assets/servicio-seguridad-fisica.webp",
-    alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia.",
-  },
-  {
-    label: "02 · Visibilidad y control",
-    src: "/assets/servicio-centro-monitoreo.webp",
-    alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.",
-  },
-  {
-    label: "03 · Movimiento de mercancías",
-    src: "/assets/servicio-inspeccion-contenedores.webp",
-    alt: "Personal KGB con chaleco, linterna y tableta inspeccionando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores.",
-  },
-  {
-    label: "04 · Inspección especializada · K9",
-    src: "/assets/servicio-unidad-canina.webp",
-    alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas.",
-  },
-  {
-    label: "04 · Inspección especializada · K9",
-    src: "/assets/servicio-unidad-canina-cacao.webp",
-    alt: "Guía KGB con un perro K9 revisando sacos de cacao en un puerto. Mensaje: Tu primera línea de defensa tiene cuatro patas.",
-  },
-  {
-    label: "04 · Inspección especializada · K9",
-    src: "/assets/servicio-unidad-canina-camaron.webp",
-    alt: "Guía KGB con un perro K9 revisando cajas de camarón junto a contenedores. Mensaje: Tu primera línea de defensa tiene cuatro patas.",
+    media: [
+      { src: "/assets/servicio-unidad-canina.webp", alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+      { src: "/assets/servicio-unidad-canina-cacao.webp", alt: "Guía KGB con un perro K9 revisando sacos de cacao en un puerto. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+      { src: "/assets/servicio-unidad-canina-camaron.webp", alt: "Guía KGB con un perro K9 revisando cajas de camarón junto a contenedores. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+    ],
   },
 ];
 
@@ -203,32 +184,44 @@ const contact = {
           <p class="section-lede">Organizamos las soluciones por el problema que deben resolver, no como una lista aislada de servicios.</p>
         </div>
 
-        <div class="service-list">
-          {serviceGroups.map((service, index) => (
-            <article class="service-row" data-reveal style={`--reveal-delay: ${index * 55}ms`}>
-              <span class="service-number">{service.number}</span>
-              <div class="service-title">
-                <span>{service.title}</span>
-                <h3>{service.name}</h3>
-              </div>
-              <div class="service-copy">
-                <p>{service.summary}</p>
-                <span>{service.scope}</span>
-              </div>
-              <a href="#contact" aria-label={`Solicitar información sobre ${service.name}`}>Consultar <span aria-hidden="true">↗</span></a>
-            </article>
-          ))}
-        </div>
+        <div class="svc-tabs" data-svc-tabs>
+          <div class="svc-nav" role="tablist" aria-label="Servicios de KGB">
+            {serviceGroups.map((service, index) => (
+              <button
+                class="svc-tab"
+                type="button"
+                role="tab"
+                id={`svc-tab-${index}`}
+                aria-controls={`svc-panel-${index}`}
+                aria-selected={index === 0 ? "true" : "false"}
+                tabindex={index === 0 ? 0 : -1}
+              >
+                <span class="svc-tab-num">{service.number}</span>
+                <span class="svc-tab-text"><small>{service.title}</small><strong>{service.name}</strong></span>
+              </button>
+            ))}
+          </div>
 
-        <div class="service-gallery" aria-label="Servicios en operación">
-          {serviceGallery.map((item, index) => (
-            <figure class="service-shot" data-reveal style={`--reveal-delay: ${(index % 2) * 70}ms`}>
-              <div class="service-shot-frame">
-                <img src={item.src} alt={item.alt} width="1192" height="1191" loading="lazy" decoding="async" />
-              </div>
-              <figcaption>{item.label}</figcaption>
-            </figure>
-          ))}
+          <div class="svc-stage">
+            {serviceGroups.map((service, index) => (
+              <article class="svc-panel" role="tabpanel" id={`svc-panel-${index}`} aria-labelledby={`svc-tab-${index}`} tabindex="0">
+                <div class={`svc-media svc-media-${service.media.length}`}>
+                  {service.media.map((image) => (
+                    <div class="service-shot-frame">
+                      <img src={image.src} alt={image.alt} width="1192" height="1191" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                    </div>
+                  ))}
+                </div>
+                <div class="svc-detail">
+                  <p class="svc-eyebrow">{service.number} · {service.title}</p>
+                  <h3>{service.name}</h3>
+                  <p class="svc-summary">{service.summary}</p>
+                  <p class="svc-scope">{service.scope}</p>
+                  <a class="text-link" href="#contact" aria-label={`Solicitar información sobre ${service.name}`}>Consultar este servicio <span aria-hidden="true">↗</span></a>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -379,6 +372,47 @@ const contact = {
     </footer>
   </div>
 </BaseLayout>
+
+<script>
+  const svcRoot = document.querySelector<HTMLElement>("[data-svc-tabs]");
+
+  if (svcRoot) {
+    const tabs = Array.from(svcRoot.querySelectorAll<HTMLButtonElement>(".svc-tab"));
+    const panels = Array.from(svcRoot.querySelectorAll<HTMLElement>(".svc-panel"));
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        panels[i].hidden = !active;
+      });
+      if (focus) tabs[index].focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(index));
+      tab.addEventListener("keydown", (event) => {
+        const last = tabs.length - 1;
+        const keys: Record<string, number> = {
+          ArrowDown: index === last ? 0 : index + 1,
+          ArrowRight: index === last ? 0 : index + 1,
+          ArrowUp: index === 0 ? last : index - 1,
+          ArrowLeft: index === 0 ? last : index - 1,
+          Home: 0,
+          End: last,
+        };
+        if (event.key in keys) {
+          event.preventDefault();
+          select(keys[event.key], true);
+        }
+      });
+    });
+
+    svcRoot.dataset.ready = "true";
+    select(0);
+  }
+</script>
 
 <script>
   const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle");

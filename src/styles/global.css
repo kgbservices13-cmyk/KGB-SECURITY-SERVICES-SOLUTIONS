@@ -970,6 +970,23 @@ main,
   text-transform: uppercase;
 }
 
+/* Touch devices: enlarge small tap targets with an invisible hit area, no visual change. */
+@media (pointer: coarse) {
+  .text-link,
+  .menu-toggle,
+  .footer-links a {
+    position: relative;
+  }
+
+  .text-link::before,
+  .menu-toggle::before,
+  .footer-links a::before {
+    position: absolute;
+    inset: -10px -8px;
+    content: "";
+  }
+}
+
 /* Services: carousel of uncropped posters, with the four services as an index. */
 .svc-tabs {
   display: grid;

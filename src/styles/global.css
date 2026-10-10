@@ -1216,6 +1216,7 @@ main,
   top: 6px;
   left: -38px;
   z-index: 1;
+  box-sizing: border-box;
   width: 14px;
   height: 14px;
   border: 2px solid var(--yellow);

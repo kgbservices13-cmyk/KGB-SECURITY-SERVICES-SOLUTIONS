@@ -50,21 +50,22 @@ const serviceGroups = [
   },
 ];
 
-const processGallery = [
+const flowMedia = [
   {
-    label: "Antes · Evaluamos",
     src: "/assets/servicio-poligrafia.webp",
     alt: "Examen de poligrafía en una oficina con una examinadora KGB tomando notas. Mensaje: La confianza se gana. La verdad se comprueba.",
   },
   {
-    label: "Durante · Acompañamos",
+    src: "/assets/servicio-centro-monitoreo.webp",
+    alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.",
+  },
+  {
     src: "/assets/servicio-candado-satelital.webp",
     alt: "Dos agentes KGB anotando junto a un contenedor con candado satelital y una camioneta KGB en el puerto. Mensaje: Candado satelital KGB, tu contenedor bajo llave y bajo control.",
   },
   {
-    label: "Cierre · Cerramos",
     src: "/assets/servicio-inspeccion-contenedores.webp",
-    alt: "Personal KGB verificando un contenedor con tableta al cierre de la operación. Mensaje: Inspección y verificación de contenedores.",
+    alt: "Personal KGB con chaleco, linterna y tableta verificando un contenedor al cierre de la operación. Mensaje: Inspección y verificación de contenedores.",
   },
 ];
 
@@ -241,26 +242,37 @@ const contact = {
           <p>Convertimos el recorrido en decisiones concretas: qué observar, dónde intervenir y cómo mantener la operación coordinada.</p>
         </div>
 
-        <ol class="process-list">
-          {operationSteps.map((step, index) => (
-            <li class="process-step" data-reveal style={`--reveal-delay: ${index * 65}ms`}>
-              <div class="process-marker"><span>{String(index + 1).padStart(2, "0")}</span><i aria-hidden="true"></i></div>
-              <span class="process-phase">{step.phase}</span>
-              <h3>{step.title}</h3>
-              <p>{step.detail}</p>
-            </li>
-          ))}
-        </ol>
+        <div class="flow" data-flow>
+          <div class="flow-visual" aria-hidden="true">
+            <div class="flow-frame">
+              {flowMedia.map((media, index) => (
+                <img class={index === 0 ? "flow-img is-active" : "flow-img"} src={media.src} alt="" width="1192" height="1191" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              ))}
+            </div>
+            <p class="flow-caption"><span data-flow-phase>{operationSteps[0].phase}</span> · <strong data-flow-title>{operationSteps[0].title}</strong></p>
+          </div>
 
-        <div class="process-gallery" aria-label="Etapas de la operación">
-          {processGallery.map((item, index) => (
-            <figure class="service-shot process-shot" data-reveal style={`--reveal-delay: ${index * 70}ms`}>
-              <div class="service-shot-frame">
-                <img src={item.src} alt={item.alt} width="1192" height="1191" loading="lazy" decoding="async" />
-              </div>
-              <figcaption>{item.label}</figcaption>
-            </figure>
-          ))}
+          <ol class="flow-steps">
+            {operationSteps.map((step, index) => (
+              <li class={index === 0 ? "flow-step is-active" : "flow-step"} data-phase={step.phase} data-title={step.title}>
+                {(index === 0 || operationSteps[index - 1].phase !== step.phase) && <p class="flow-phase">{step.phase}</p>}
+                <div class="flow-head">
+                  <span class="flow-num">{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3>
+                </div>
+                <p class="flow-detail">{step.detail}</p>
+                <figure class="flow-inline">
+                  <div class="flow-inline-frame">
+                    <img src={flowMedia[index].src} alt={flowMedia[index].alt} width="1192" height="1191" loading="lazy" decoding="async" />
+                  </div>
+                </figure>
+              </li>
+            ))}
+          </ol>
+
+          <div class="flow-cta">
+            <a class="button button-primary" href="#contact">Solicitar una evaluación <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
       </section>
 
@@ -379,6 +391,45 @@ const contact = {
     </footer>
   </div>
 </BaseLayout>
+
+<script>
+  const flowRoot = document.querySelector<HTMLElement>("[data-flow]");
+
+  if (flowRoot) {
+    const steps = Array.from(flowRoot.querySelectorAll<HTMLElement>(".flow-step"));
+    const images = Array.from(flowRoot.querySelectorAll<HTMLElement>(".flow-img"));
+    const list = flowRoot.querySelector<HTMLElement>(".flow-steps");
+    const phase = flowRoot.querySelector<HTMLElement>("[data-flow-phase]");
+    const title = flowRoot.querySelector<HTMLElement>("[data-flow-title]");
+    let active = 0;
+
+    const update = () => {
+      const mid = window.innerHeight * 0.45;
+      let next = 0;
+      steps.forEach((step, index) => {
+        if (step.getBoundingClientRect().top <= mid) next = index;
+      });
+
+      if (list) {
+        const box = list.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, (mid - box.top) / box.height));
+        list.style.setProperty("--flow-progress", progress.toFixed(3));
+      }
+
+      if (next === active) return;
+      active = next;
+      steps.forEach((step, index) => step.classList.toggle("is-active", index === next));
+      images.forEach((image, index) => image.classList.toggle("is-active", index === next));
+      if (phase) phase.textContent = steps[next].dataset.phase ?? "";
+      if (title) title.textContent = steps[next].dataset.title ?? "";
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    flowRoot.dataset.ready = "true";
+    update();
+  }
+</script>
 
 <script>
   const svcRoot = document.querySelector<HTMLElement>("[data-svc-tabs]");

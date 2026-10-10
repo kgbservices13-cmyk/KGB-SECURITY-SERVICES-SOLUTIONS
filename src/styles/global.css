@@ -98,6 +98,8 @@ h2 {
 
 .site-shell {
   overflow: hidden;
+  /* clip keeps the full-bleed sections from causing sideways scroll without breaking position: sticky */
+  overflow: clip;
 }
 
 .site-header,
@@ -587,72 +589,6 @@ main,
 
 .operation-heading > p {
   color: var(--navy-muted);
-}
-
-.process-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.process-step,
-.process-step + .process-step {
-  position: relative;
-  min-height: 0;
-  padding: 22px 0 24px;
-  border-right: 0;
-  border-bottom: 1px solid rgb(255 255 255 / 22%);
-}
-
-.process-step:last-child {
-  border-bottom: 0;
-}
-
-.process-marker {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  margin-bottom: 14px;
-  color: var(--yellow);
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
-.process-marker i {
-  display: block;
-  width: 11px;
-  height: 11px;
-  border: 2px solid var(--yellow);
-  border-radius: 50%;
-  background: var(--navy);
-}
-
-.process-step:not(:last-child)::after {
-  display: none;
-}
-
-.process-phase {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--blue);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.process-step h3 {
-  margin: 0 0 8px;
-  font-size: 1.25rem;
-}
-
-.process-step p {
-  max-width: 225px;
-  margin: 0;
-  color: var(--navy-muted);
-  font-size: 0.82rem;
 }
 
 .coverage-section,
@@ -1193,26 +1129,6 @@ main,
   }
 }
 
-/* Poster galleries: tiles stay square and never exceed 300px. */
-.process-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  margin-top: 56px;
-}
-
-.process-gallery .service-shot {
-  width: min(100%, 300px);
-}
-
-.process-shot .service-shot-frame {
-  background: var(--navy-surface);
-}
-
-.process-shot figcaption {
-  color: var(--navy-muted);
-}
-
 .extra-section {
   display: grid;
   gap: 28px;
@@ -1251,16 +1167,212 @@ main,
   }
 }
 
+/* How we work: the active step drives a sticky poster; the rail fills while scrolling. */
+.flow {
+  display: grid;
+  gap: 8px;
+  margin-top: 44px;
+}
+
+.flow-visual {
+  display: none;
+}
+
+.flow-steps {
+  --flow-progress: 0;
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 38px;
+  list-style: none;
+}
+
+.flow-steps::before,
+.flow-steps::after {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 6px;
+  width: 2px;
+  content: "";
+}
+
+.flow-steps::before {
+  background: rgb(255 255 255 / 20%);
+}
+
+.flow-steps::after {
+  background: var(--yellow);
+  transform: scaleY(var(--flow-progress));
+  transform-origin: top;
+}
+
+.flow-step {
+  position: relative;
+  padding: 0 0 52px;
+}
+
+.flow-step::before {
+  position: absolute;
+  top: 6px;
+  left: -38px;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--yellow);
+  border-radius: 50%;
+  background: var(--navy);
+  content: "";
+  transition: background-color 0.3s var(--ease-out);
+}
+
+.flow-step.is-active::before {
+  background: var(--yellow);
+}
+
+.flow-phase {
+  margin: 0 0 14px;
+  color: var(--blue);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.flow-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.flow-num {
+  color: var(--yellow);
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.flow-head h3 {
+  margin: 0;
+  font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+  line-height: 1.1;
+}
+
+.flow-detail {
+  max-width: 460px;
+  margin: 0 0 22px;
+  color: var(--navy-muted);
+  font-size: 0.95rem;
+}
+
+.flow-inline {
+  width: min(100%, 360px);
+  margin: 0;
+}
+
+.flow-inline-frame,
+.flow-frame {
+  border-left: 6px solid var(--yellow);
+  background: var(--navy-surface);
+}
+
+.flow-inline-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flow-cta {
+  padding: 12px 0 0 38px;
+}
+
 @media (min-width: 1041px) {
-  .process-gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    width: min(100%, 940px);
-    margin-inline: auto;
+  .flow {
+    grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+    column-gap: clamp(56px, 7vw, 110px);
+    align-items: start;
+    margin-top: 56px;
   }
 
-  .process-gallery .service-shot {
+  .flow-visual {
+    position: sticky;
+    top: 32px;
+    display: block;
+    grid-row: 1 / span 2;
+  }
+
+  .flow-frame {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .flow-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+  }
+
+  .flow-img.is-active {
+    opacity: 1;
+  }
+
+  .flow-caption {
+    margin: 14px 0 0;
+    color: var(--navy-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .flow-caption strong {
+    color: var(--white);
+  }
+
+  .flow-steps {
+    grid-column: 2;
+    padding-left: 44px;
+  }
+
+  .flow-step {
+    min-height: clamp(260px, 44vh, 400px);
+    padding-bottom: 40px;
+  }
+
+  .flow-step::before {
+    left: -44px;
+  }
+
+  .flow-inline {
+    display: none;
+  }
+
+  .flow-cta {
+    grid-column: 2;
+    padding-left: 44px;
+  }
+
+  .flow[data-ready] .flow-step {
+    opacity: 0.38;
+    transition: opacity 0.35s var(--ease-out);
+  }
+
+  .flow[data-ready] .flow-step.is-active {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-img,
+  .flow-step,
+  .flow-step::before {
+    transition: none;
   }
 }
 
@@ -1414,40 +1526,6 @@ main,
     padding-bottom: 48px;
   }
 
-  .process-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .process-step,
-  .process-step + .process-step {
-    min-height: 225px;
-    padding: 28px 24px 0 0;
-    border-right: 1px solid rgb(255 255 255 / 22%);
-    border-bottom: 0;
-  }
-
-  .process-step + .process-step {
-    padding-left: 24px;
-  }
-
-  .process-step:last-child {
-    border-right: 0;
-  }
-
-  .process-marker {
-    margin-bottom: 29px;
-  }
-
-  .process-step:not(:last-child)::after {
-    position: absolute;
-    top: 34px;
-    right: -1px;
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: rgb(255 255 255 / 22%);
-    content: "";
-  }
 
   .coverage-section,
   .contact-section {

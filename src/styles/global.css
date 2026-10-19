@@ -1985,3 +1985,19 @@ h2 {
   text-transform: none;
 }
 
+/* A landscape poster keeps its own proportion (never cropped); the text column gets the rest. */
+.svc-panel-wide .svc-media {
+  width: min(100%, 460px);
+}
+
+@media (min-width: 761px) {
+  .svc-panel-wide {
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .svc-panel-wide .svc-detail h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    overflow-wrap: break-word;
+  }
+}

@@ -44,7 +44,7 @@ const serviceGroups = [
     summary: "Inspección con unidad canina K9, control de sustancias fiscalizadas y pruebas de poligrafía.",
     scope: "Revisión más precisa que la inspección visual.",
     media: [
-      { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta inspeccionando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores." },
+      { src: "/assets/servicio-listado-servicios.webp", alt: "Afiche de KGB con el listado de servicios: seguridad física, seguridad electrónica y cámaras, candados satelitales, monitoreo, custodias armadas para importación y exportación, custodias fluviales, inspecciones K9 y pruebas poligráficas. Incluye guardias, un camión, contenedores en un puerto y una camioneta KGB.", width: 1153, height: 824 },
     ],
   },
 ];
@@ -191,10 +191,10 @@ const contact = {
           <div class="svc-carousel" role="region" aria-roledescription="carrusel" aria-label="Servicios de KGB">
             <div class="svc-stage" tabindex="0">
               {serviceSlides.map((slide, index) => (
-                <article class="svc-panel" role="group" aria-roledescription="diapositiva" aria-label={`${index + 1} de ${serviceSlides.length}`} data-service={slide.serviceIndex}>
+                <article class={slide.image.width ? "svc-panel svc-panel-wide" : "svc-panel"} role="group" aria-roledescription="diapositiva" aria-label={`${index + 1} de ${serviceSlides.length}`} data-service={slide.serviceIndex}>
                   <div class="svc-media">
                     <div class="service-shot-frame">
-                      <img src={slide.image.src} alt={slide.image.alt} width="1192" height="1191" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                      <img src={slide.image.src} alt={slide.image.alt} width={slide.image.width ?? 1192} height={slide.image.height ?? 1191} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
                     </div>
                   </div>
                   <div class="svc-detail">

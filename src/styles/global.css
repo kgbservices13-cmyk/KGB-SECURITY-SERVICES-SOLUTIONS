@@ -1741,3 +1741,247 @@ main,
     transform: none;
   }
 }
+
+/* ==========================================================================
+   Art-direction pass: brand typography, calmer hierarchy, no template chrome.
+   Kept at the end so it overrides the earlier base rules.
+   ========================================================================== */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-600.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-400.woff2") format("woff2");
+  font-weight: 100 700;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "Outfit", "Arial Nova", Arial, sans-serif;
+  --font-text: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-text);
+}
+
+h1,
+h2,
+h3,
+.button,
+.header-cta,
+.flow-num,
+.svc-tab-text strong,
+.route-point strong,
+.hero-proof strong {
+  font-family: var(--font-display);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+}
+
+h1,
+h2 {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Headings: one calm scale, always clear of the paragraph below. */
+.hero h1 {
+  font-size: clamp(2.4rem, 10vw, 3.4rem);
+  line-height: 1.06;
+  margin-bottom: 22px;
+}
+
+.section-intro h2,
+.operation-heading h2,
+.coverage-copy h2,
+.contact-copy h2 {
+  max-width: 720px;
+  margin-bottom: 20px;
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.section-intro,
+.operation-heading {
+  display: block;
+  max-width: 760px;
+}
+
+.section-intro {
+  margin-bottom: 44px;
+}
+
+.operation-heading {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.operation-heading > p,
+.coverage-copy > p,
+.contact-copy > p {
+  max-width: 520px;
+  font-size: 1rem;
+}
+
+/* No ghost outline behind the hero image. */
+.hero-image-frame::after {
+  display: none;
+}
+
+/* Hero facts: plain, specific, no decorative dashes. */
+.hero-proof strong {
+  font-size: 0.95rem;
+}
+
+.hero-proof small {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.hero-proof > div,
+.hero-proof > div + div {
+  display: block;
+  padding: 14px 16px 14px 0;
+}
+
+.hero-proof small {
+  margin-top: 2px;
+}
+
+/* Sentence case for the small labels that used to shout in capitals. */
+.svc-tab-text small,
+.svc-eyebrow,
+.flow-phase,
+.flow-caption {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.svc-eyebrow,
+.flow-phase {
+  font-size: 0.82rem;
+}
+
+.svc-tab-text small {
+  font-size: 0.74rem;
+}
+
+.flow-caption {
+  font-size: 0.82rem;
+}
+
+.svc-scope {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* Coverage: an open route instead of a dashboard card. */
+.route-board {
+  border: 0;
+  background: transparent;
+}
+
+.route-track {
+  gap: 32px;
+  padding: 8px 0 0;
+}
+
+.route-track-line {
+  top: 12px;
+  bottom: 12px;
+  left: 8px;
+  width: 2px;
+  background: var(--ink);
+}
+
+.route-point {
+  grid-template-columns: 18px 1fr;
+  column-gap: 20px;
+  align-items: start;
+}
+
+.route-point-node {
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--yellow);
+}
+
+.route-point strong {
+  margin-bottom: 4px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.route-point small {
+  font-size: 0.92rem;
+}
+
+/* Site footer carries real contact data. */
+.footer-links {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+@media (min-width: 1041px) {
+  .hero h1 {
+    font-size: clamp(2.8rem, 4.4vw, 4.4rem);
+  }
+
+  .section-intro h2,
+  .operation-heading h2,
+  .coverage-copy h2,
+  .contact-copy h2 {
+    margin-bottom: 22px;
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem);
+  }
+
+  .route-track {
+    gap: 24px;
+    padding: 0;
+  }
+
+  .route-track-line {
+    top: 9px;
+    right: 8%;
+    bottom: auto;
+    left: 8%;
+    width: auto;
+    height: 2px;
+  }
+
+  .route-point {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .route-point-node {
+    margin: 0 0 22px;
+  }
+
+  .route-point small {
+    max-width: 200px;
+  }
+}
+
+.contact-detail span {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+

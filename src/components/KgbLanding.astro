@@ -13,7 +13,7 @@ const serviceGroups = [
     title: "Protección en sitio",
     name: "Seguridad física",
     summary: "Personal preparado para controlar accesos, vigilar instalaciones y responder ante incidentes.",
-    scope: "Control de accesos · rondas · prevención",
+    scope: "Control de accesos, rondas y prevención.",
     media: [
       { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
     ],
@@ -23,7 +23,7 @@ const serviceGroups = [
     title: "Visibilidad y control",
     name: "Seguridad electrónica",
     summary: "Cámaras, alarmas y monitoreo para mantener los puntos críticos bajo observación.",
-    scope: "Cámaras · sensores · monitoreo",
+    scope: "Cámaras, sensores y monitoreo.",
     media: [
       { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea." },
     ],
@@ -33,7 +33,7 @@ const serviceGroups = [
     title: "Movimiento de mercancías",
     name: "Custodias para importación y exportación",
     summary: "Acompañamiento coordinado para proteger la carga durante el tránsito y el almacenamiento.",
-    scope: "Custodias armadas · fluviales · rutas",
+    scope: "Custodias armadas, fluviales y de rutas.",
     media: [
       { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
     ],
@@ -42,8 +42,8 @@ const serviceGroups = [
     number: "04",
     title: "Inspección especializada",
     name: "Servicios complementarios",
-    summary: "Controles adicionales para operaciones que requieren una revisión más precisa.",
-    scope: "K9 · sustancias fiscalizadas · poligrafía",
+    summary: "Inspección con unidad canina K9, control de sustancias fiscalizadas y pruebas de poligrafía.",
+    scope: "Revisión más precisa que la inspección visual.",
     media: [
       { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta inspeccionando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores." },
     ],
@@ -145,7 +145,6 @@ const contact = {
     <div class="top-note" aria-label="Especialidad de KGB">
       <div class="top-note-inner">
         <span>Seguridad para importación y exportación</span>
-        <span>Del origen al destino</span>
       </div>
     </div>
 
@@ -155,25 +154,16 @@ const contact = {
           <p class="kicker">Seguridad física</p>
           <h1 id="hero-title">Seguridad para tu carga, de origen a destino.</h1>
           <p class="hero-intro">
-            Coordinamos seguridad física, tecnología y custodias según el recorrido de tu mercancía para que la operación avance con claridad.
+            Custodias armadas, candado satelital y unidad canina K9 para exportadores e importadores en Ecuador, del puerto al destino.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#contact">Solicitar una evaluación <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#services">Conocer los servicios <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#services">Ver los servicios <span aria-hidden="true">↓</span></a>
           </div>
-          <div class="hero-proof" aria-label="Capas de protección">
-            <div>
-              <span class="proof-mark" aria-hidden="true">—</span>
-              <div><strong>Personal</strong><small>presencia donde importa</small></div>
-            </div>
-            <div>
-              <span class="proof-mark" aria-hidden="true">—</span>
-              <div><strong>Tecnología</strong><small>visibilidad y control</small></div>
-            </div>
-            <div>
-              <span class="proof-mark" aria-hidden="true">—</span>
-              <div><strong>Protocolos</strong><small>respuesta coordinada</small></div>
-            </div>
+          <div class="hero-proof" aria-label="Lo que hacemos">
+            <div><strong>Custodia armada</strong><small>terrestre y fluvial</small></div>
+            <div><strong>Candado satelital</strong><small>para contenedores</small></div>
+            <div><strong>Unidad canina K9</strong><small>inspección de carga</small></div>
           </div>
         </div>
 
@@ -186,19 +176,14 @@ const contact = {
       </section>
 
       <section class="services-section" id="services" aria-labelledby="services-title">
-        <div class="section-intro" data-reveal>
-          <div>
-            <p class="kicker">Servicios</p>
-            <h2 id="services-title">Una estrategia de protección para cada necesidad.</h2>
-          </div>
-          <p class="section-lede">Organizamos las soluciones por el problema que deben resolver, no como una lista aislada de servicios.</p>
+        <div class="section-intro">
+          <h2 id="services-title">Servicios de seguridad para instalaciones, carga e inspecciones.</h2>
         </div>
 
         <div class="svc-tabs" data-svc-tabs>
           <div class="svc-nav" aria-label="Ir a un servicio">
             {serviceGroups.map((service, index) => (
               <button class="svc-tab" type="button" data-slide={firstSlideOf[index]} aria-current={index === 0 ? "true" : undefined}>
-                <span class="svc-tab-num">{service.number}</span>
                 <span class="svc-tab-text"><small>{service.title}</small><strong>{service.name}</strong></span>
               </button>
             ))}
@@ -214,11 +199,11 @@ const contact = {
                     </div>
                   </div>
                   <div class="svc-detail">
-                    <p class="svc-eyebrow">{slide.number} · {slide.title}{slide.parts > 1 ? ` · ${slide.part}/${slide.parts}` : ""}</p>
+                    <p class="svc-eyebrow">{slide.title}</p>
                     <h3>{slide.name}</h3>
                     <p class="svc-summary">{slide.summary}</p>
                     <p class="svc-scope">{slide.scope}</p>
-                    <a class="text-link" href="#contact" aria-label={`Solicitar información sobre ${slide.name}`}>Consultar este servicio <span aria-hidden="true">↗</span></a>
+                    <a class="text-link" href="#contact" aria-label={`Solicitar información sobre ${slide.name}`}>Cotizar este servicio <span aria-hidden="true">↗</span></a>
                   </div>
                 </article>
               ))}
@@ -234,12 +219,9 @@ const contact = {
       </section>
 
       <section class="operation-section" id="operation" aria-labelledby="operation-title">
-        <div class="operation-heading" data-reveal>
-          <div>
-            <p class="kicker kicker-light">Cómo trabajamos</p>
-            <h2 id="operation-title">La seguridad se prepara antes de que la carga se mueva.</h2>
-          </div>
-          <p>Convertimos el recorrido en decisiones concretas: qué observar, dónde intervenir y cómo mantener la operación coordinada.</p>
+        <div class="operation-heading">
+          <h2 id="operation-title">La seguridad se prepara antes de que la carga se mueva.</h2>
+          <p>Cuatro pasos, de la evaluación inicial al cierre de la operación.</p>
         </div>
 
         <div class="flow" data-flow>
@@ -277,42 +259,38 @@ const contact = {
       </section>
 
       <section class="coverage-section" id="coverage" aria-labelledby="coverage-title">
-        <div class="coverage-copy" data-reveal>
-          <p class="kicker">Cobertura</p>
-          <h2 id="coverage-title">Una misma lectura de seguridad para toda la ruta.</h2>
-          <p>El alcance cambia en cada operación. La coordinación y la respuesta deben mantenerse conectadas desde el puerto hasta el destino.</p>
+        <div class="coverage-copy">
+          <h2 id="coverage-title">Acompañamos la carga del puerto al destino.</h2>
+          <p>El alcance depende de la mercancía y de la ruta. Lo definimos contigo antes de mover la carga.</p>
           <a class="text-link" href="#contact">Definir el alcance de tu operación <span aria-hidden="true">↗</span></a>
         </div>
 
-        <div class="route-board" data-reveal style="--reveal-delay: 90ms" aria-label="Etapas de una ruta protegida">
-          <div class="route-board-head"><span>Ruta de protección</span><span>Origen → destino</span></div>
+        <div class="route-board" aria-label="Etapas de una ruta protegida">
           <div class="route-track">
             <div class="route-track-line" aria-hidden="true"></div>
             <div class="route-point">
-              <span class="route-point-node">01</span>
+              <span class="route-point-node" aria-hidden="true"></span>
               <strong>Puerto</strong>
               <small>Recepción y control inicial</small>
             </div>
-            <div class="route-point route-point-active">
-              <span class="route-point-node">02</span>
+            <div class="route-point">
+              <span class="route-point-node" aria-hidden="true"></span>
               <strong>Tránsito</strong>
               <small>Acompañamiento y monitoreo</small>
             </div>
             <div class="route-point">
-              <span class="route-point-node">03</span>
+              <span class="route-point-node" aria-hidden="true"></span>
               <strong>Destino</strong>
               <small>Cierre de la operación</small>
             </div>
           </div>
-          <div class="route-board-foot"><strong>Personal · tecnología · protocolos</strong><span>El esquema se define según la operación.</span></div>
         </div>
       </section>
 
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
-        <div class="contact-copy" data-reveal>
-          <p class="kicker">Cotización</p>
+        <div class="contact-copy">
           <h2 id="contact-title">Hablemos de tu operación.</h2>
-          <p>Cuéntanos qué necesitas proteger y te orientaremos hacia la combinación de servicios adecuada.</p>
+          <p>Cuéntanos qué necesitas proteger y la ruta de tu carga.</p>
           <div class="contact-details" aria-label="Canales de contacto">
             <div class="contact-detail">
               <span>Teléfono convencional</span>
@@ -336,7 +314,7 @@ const contact = {
           </div>
         </div>
 
-        <form class="contact-form" id="contact-form" data-reveal style="--reveal-delay: 90ms">
+        <form class="contact-form" id="contact-form">
           <div class="form-heading"><strong>Solicitar una evaluación</strong><span>Te responderemos con los siguientes pasos.</span></div>
           <div class="form-field">
             <label for="name">Nombre de contacto</label>
@@ -365,16 +343,15 @@ const contact = {
       </section>
 
       <section class="extra-section" id="extra" aria-labelledby="extra-title">
-        <figure class="extra-figure" data-reveal>
+        <figure class="extra-figure">
           <div class="service-shot-frame">
             <img src="/assets/servicio-candado-satelital.webp" alt="Dos agentes KGB anotando junto a un contenedor con candado satelital y una camioneta KGB en el puerto. Mensaje: Candado satelital KGB, tu contenedor bajo llave y bajo control." width="1192" height="1191" loading="lazy" decoding="async" />
           </div>
         </figure>
-        <div class="extra-copy" data-reveal style="--reveal-delay: 90ms">
-          <p class="kicker">Servicios adicionales</p>
-          <h2 id="extra-title">Vigilancia privada e instalaciones.</h2>
-          <p>Además de la operación logística, también atendemos la vigilancia de instalaciones y propiedades privadas.</p>
-          <a class="text-link" href="#contact">Consultar este servicio <span aria-hidden="true">↗</span></a>
+        <div class="extra-copy">
+          <h2 id="extra-title">Candado satelital: tu contenedor, bajo llave y bajo control.</h2>
+          <p>Cada contenedor viaja cerrado con candado satelital durante el recorrido.</p>
+          <a class="text-link" href="#contact">Cotizar el candado satelital <span aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
@@ -384,10 +361,12 @@ const contact = {
         <img src="/assets/kgb-logo-v2.png" alt="KGB Security Services & Solutions" width="300" height="110" />
       </a>
       <div class="footer-links">
-        <a href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-        <a href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer">Solicitar cotización <span aria-hidden="true">↗</span></a>
+        <a href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer">WhatsApp {contact.whatsappPrimary.display}</a>
+        <a href={contact.conventional.href}>Teléfono {contact.conventional.display}</a>
+        <a href={`mailto:${contact.commercialEmail}`}>{contact.commercialEmail}</a>
+        <a href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer">Instagram @kgb.ec</a>
       </div>
-      <p class="footer-legal">Seguridad integral para importación y exportación · © {new Date().getFullYear()} KGB Security Services & Solutions</p>
+      <p class="footer-legal">© {new Date().getFullYear()} KGB Security Services & Solutions</p>
     </footer>
   </div>
 </BaseLayout>
@@ -441,7 +420,6 @@ const contact = {
     const counter = svcRoot.querySelector<HTMLElement>("[data-svc-current]");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let current = 0;
-    let autoplay: number | undefined;
 
     let touching = false;
     let settle: number | undefined;
@@ -469,37 +447,23 @@ const contact = {
       if (counter) counter.textContent = String(index + 1).padStart(2, "0");
     };
 
-    const stopAutoplay = () => {
-      if (autoplay) window.clearInterval(autoplay);
-      autoplay = undefined;
-    };
 
     svcStage.addEventListener("scroll", sync, { passive: true });
 
-    tabs.forEach((tab) => tab.addEventListener("click", () => { stopAutoplay(); goTo(Number(tab.dataset.slide)); }));
+    tabs.forEach((tab) => tab.addEventListener("click", () => { goTo(Number(tab.dataset.slide)); }));
     svcRoot.querySelectorAll<HTMLButtonElement>(".svc-arrow").forEach((button) => {
-      button.addEventListener("click", () => { stopAutoplay(); goTo(current + Number(button.dataset.dir)); });
+      button.addEventListener("click", () => { goTo(current + Number(button.dataset.dir)); });
     });
     svcStage.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
         event.preventDefault();
-        stopAutoplay();
         goTo(current + (event.key === "ArrowRight" ? 1 : -1));
       }
     });
-    svcStage.addEventListener("pointerdown", () => { touching = true; stopAutoplay(); });
+    svcStage.addEventListener("pointerdown", () => { touching = true; });
     window.addEventListener("pointerup", () => { touching = false; });
     window.addEventListener("pointercancel", () => { touching = false; });
-    svcStage.addEventListener("focusin", stopAutoplay);
     window.addEventListener("resize", () => svcStage.scrollTo({ left: current * svcStage.clientWidth, behavior: "auto" }));
-
-    // Gentle autoplay while the carousel is on screen; any interaction stops it for good.
-    if (!reduceMotion) {
-      new IntersectionObserver(([entry]) => {
-        stopAutoplay();
-        if (entry.isIntersecting) autoplay = window.setInterval(() => goTo(current + 1), 7000);
-      }, { threshold: 0.6 }).observe(svcStage);
-    }
   }
 </script>
 

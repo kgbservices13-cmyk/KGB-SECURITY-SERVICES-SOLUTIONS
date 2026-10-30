@@ -14,6 +14,34 @@ const custodyPhotos = [
   { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
 ];
 
+// "Más servicios": cada fila se abre al tocarla. Todas las imágenes cuadradas y sin recortar.
+const moreServices = [
+  {
+    name: "Seguridad electrónica y monitoreo",
+    text: "Cámaras, sensores y monitoreo.",
+    images: [
+      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea." },
+    ],
+  },
+  {
+    name: "Inspección K9 y de contenedores",
+    text: "Inspecciones K9 de sustancias sujetas a fiscalización.",
+    images: [
+      { src: "/assets/servicio-unidad-canina.webp", alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+      { src: "/assets/servicio-unidad-canina-cacao.webp", alt: "Guía KGB con un perro K9 revisando sacos de cacao en un puerto. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+      { src: "/assets/servicio-unidad-canina-camaron.webp", alt: "Guía KGB con un perro K9 revisando cajas de camarón junto a contenedores. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
+      { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta revisando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores." },
+    ],
+  },
+  {
+    name: "Pruebas poligráficas",
+    text: "",
+    images: [
+      { src: "/assets/servicio-poligrafia.webp", alt: "Examen de poligrafía en una oficina con una examinadora KGB tomando notas. Mensaje: La confianza se gana. La verdad se comprueba." },
+    ],
+  },
+];
+
 const serviceOptions = [
   "Seguridad física",
   "Custodia armada",
@@ -120,6 +148,34 @@ const contact = {
           <h2 id="candado-title">Candado satelital</h2>
           <p class="feature-tagline">Tu contenedor, bajo llave y bajo control.</p>
           <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section class="more" id="mas-servicios" aria-labelledby="mas-title">
+        <h2 id="mas-title">Más servicios</h2>
+        <div class="more-list">
+          {moreServices.map((service) => (
+            <details class="more-item" name="mas-servicios">
+              <summary>
+                <h3>{service.name}</h3>
+                <span class="more-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="more-body">
+                <div class="more-text">
+                  {service.text && <p>{service.text}</p>}
+                  <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
+                </div>
+                <div class={service.images.length > 1 ? "more-media more-media-grid" : "more-media"}>
+                  {service.images.map((image) => (
+                    <div class="service-shot-frame">
+                      <img data-src={image.src} alt={image.alt} width="1192" height="1191" decoding="async" />
+                      <noscript><img src={image.src} alt={image.alt} width="1192" height="1191" /></noscript>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </details>
+          ))}
         </div>
       </section>
 
@@ -231,6 +287,19 @@ const contact = {
     </footer>
   </div>
 </BaseLayout>
+
+<script>
+  // "Más servicios": each photo is downloaded only when its row is opened.
+  document.querySelectorAll<HTMLDetailsElement>(".more-item").forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      item.querySelectorAll<HTMLImageElement>("img[data-src]").forEach((image) => {
+        image.src = image.dataset.src ?? "";
+        image.removeAttribute("data-src");
+      });
+    });
+  });
+</script>
 
 <script>
   const gallery = document.querySelector<HTMLElement>("[data-gallery]");

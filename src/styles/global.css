@@ -2442,3 +2442,138 @@ h2 {
   }
 }
 
+/* Más servicios: three collapsed rows; every photo stays square and uncropped. */
+.more {
+  padding: 52px 0;
+  border-top: 1px solid var(--line);
+}
+
+.more h2 {
+  max-width: 520px;
+  margin-bottom: 22px;
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.more-list {
+  border-top: 2px solid var(--ink);
+}
+
+.more-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.more-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.more-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.more-item summary:focus-visible {
+  outline: 2px solid var(--blue-deep);
+  outline-offset: 2px;
+}
+
+.more-item h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  line-height: 1.2;
+}
+
+.more-item summary:hover h3 {
+  color: var(--blue-deep);
+}
+
+.more-icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+}
+
+.more-icon::before,
+.more-icon::after {
+  position: absolute;
+  top: 10px;
+  left: 2px;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  content: "";
+  transition: transform 0.25s var(--ease-out);
+}
+
+.more-icon::after {
+  transform: rotate(90deg);
+}
+
+.more-item[open] .more-icon::after {
+  transform: rotate(0deg);
+}
+
+.more-body {
+  display: grid;
+  gap: 24px;
+  padding: 4px 0 36px;
+}
+
+.more-text p {
+  max-width: 440px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.more-media {
+  width: min(100%, 440px);
+}
+
+.more-media-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (min-width: 761px) {
+  .more-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 340px));
+  }
+}
+
+@media (min-width: 1041px) {
+  .more {
+    padding: 60px 0;
+  }
+
+  .more h2 {
+    margin-bottom: 26px;
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem);
+  }
+
+  .more-body {
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 88px);
+  }
+
+  .more-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 300px));
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more-icon::before,
+  .more-icon::after {
+    transition: none;
+  }
+}
+

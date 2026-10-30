@@ -7,13 +7,12 @@ const navigation = [
   { href: "#candado", label: "Candado satelital" },
 ];
 
-// Fotos de custodia para el carrusel "Custodia en operación".
-// Para agregar una foto: copiarla a public/assets/ y añadir una línea aquí (cuadrada, sin recortar).
-// El carrusel solo se muestra con 3 fotos o más, para no rellenar con imágenes repetidas.
+// Fotos del carrusel de custodia armada (camionetas y seguridad).
+// Para agregar una foto: copiarla a public/assets/ (cuadrada, sin recortar) y añadir una línea aquí.
 const custodyPhotos = [
+  { src: "/assets/servicio-custodia-convoy.webp", alt: "Convoy de tres camionetas KGB con guardias armados y cascos avanzando por un camino de tierra en el campo." },
   { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
 ];
-const showCustodyGallery = custodyPhotos.length >= 3;
 
 const serviceOptions = [
   "Seguridad física",
@@ -119,9 +118,19 @@ const contact = {
 
       <section class="operation-section" id="custodia" aria-labelledby="custodia-title">
         <div class="feature feature-flip feature-in-dark">
-          <figure class="feature-figure">
-            <div class="service-shot-frame">
-              <img src="/assets/servicio-custodia-convoy.webp" alt="Convoy de tres camionetas KGB con guardias armados y cascos avanzando por un camino de tierra en el campo." width="1056" height="1056" loading="lazy" decoding="async" />
+          <figure class="feature-figure" data-gallery>
+            <div class="gallery-track" role="region" aria-roledescription="carrusel" aria-label="Fotos de custodia armada" tabindex="0">
+              {custodyPhotos.map((photo, index) => (
+                <div class="gallery-item gallery-item-single">
+                  <div class="service-shot-frame">
+                    <img src={photo.src} alt={photo.alt} width="1192" height="1191" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div class="gallery-controls" data-gallery-controls>
+              <button class="gallery-arrow" type="button" data-dir="-1" aria-label="Foto anterior"><span aria-hidden="true">←</span></button>
+              <button class="gallery-arrow" type="button" data-dir="1" aria-label="Foto siguiente"><span aria-hidden="true">→</span></button>
             </div>
           </figure>
           <div class="feature-copy">
@@ -145,27 +154,6 @@ const contact = {
           <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
         </div>
       </section>
-
-      {showCustodyGallery && (
-        <section class="operation-section" id="operacion" aria-labelledby="operacion-title">
-          <div class="gallery" data-gallery>
-            <h2 id="operacion-title">Custodia en operación</h2>
-            <div class="gallery-track" role="region" aria-roledescription="carrusel" aria-label="Fotos de custodia" tabindex="0">
-              {custodyPhotos.map((photo) => (
-                <figure class="gallery-item">
-                  <div class="service-shot-frame">
-                    <img src={photo.src} alt={photo.alt} width="1192" height="1191" loading="lazy" decoding="async" />
-                  </div>
-                </figure>
-              ))}
-            </div>
-            <div class="gallery-controls" data-gallery-controls>
-              <button class="gallery-arrow" type="button" data-dir="-1" aria-label="Foto anterior"><span aria-hidden="true">←</span></button>
-              <button class="gallery-arrow" type="button" data-dir="1" aria-label="Foto siguiente"><span aria-hidden="true">→</span></button>
-            </div>
-          </div>
-        </section>
-      )}
 
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div class="contact-copy">

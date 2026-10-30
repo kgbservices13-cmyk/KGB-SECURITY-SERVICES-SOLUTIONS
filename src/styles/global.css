@@ -2274,3 +2274,16 @@ h2 {
   }
 }
 
+/* Custody carousel lives inside the Custodia armada block: one square photo at a time. */
+.gallery-track {
+  gap: 0;
+}
+
+.gallery-item-single {
+  flex: 0 0 100%;
+}
+
+.feature-figure .gallery-controls {
+  margin-top: 16px;
+}
+

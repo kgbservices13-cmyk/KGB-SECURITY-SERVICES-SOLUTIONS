@@ -2001,3 +2001,13 @@ h2 {
     overflow-wrap: break-word;
   }
 }
+
+/* Hero facts: centered inside each column on wider screens. */
+@media (min-width: 761px) {
+  .hero-proof > div,
+  .hero-proof > div + div {
+    padding: 15px 16px 0;
+    text-align: center;
+  }
+}
+

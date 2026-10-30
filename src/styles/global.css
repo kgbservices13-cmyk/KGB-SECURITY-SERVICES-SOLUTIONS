@@ -2023,3 +2023,10 @@ h2 {
   }
 }
 
+/* M3: the hero now carries one title and its actions; center them beside the poster. */
+@media (min-width: 1041px) {
+  .hero-copy {
+    align-self: center;
+  }
+}
+

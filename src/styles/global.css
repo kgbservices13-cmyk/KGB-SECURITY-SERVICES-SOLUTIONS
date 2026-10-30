@@ -2011,3 +2011,15 @@ h2 {
   }
 }
 
+/* Hero poster is landscape: keep its own proportion, never crop it. */
+.hero-image-frame img.hero-img-wide {
+  aspect-ratio: auto;
+  object-fit: initial;
+}
+
+@media (min-width: 1041px) {
+  .hero-visual {
+    align-self: center;
+  }
+}
+

@@ -2030,3 +2030,93 @@ h2 {
   }
 }
 
+/* M4: service blocks (seguridad física, custodia armada, candado satelital). */
+.feature {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  padding: 72px 0;
+  border-top: 1px solid var(--line);
+}
+
+.feature-figure {
+  width: min(100%, 440px);
+  margin: 0;
+}
+
+.feature-copy h2 {
+  max-width: 520px;
+  margin-bottom: 16px;
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.feature-copy p {
+  max-width: 440px;
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.feature-copy .feature-tagline {
+  margin-bottom: 12px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Dark band for custodia armada. */
+.feature-in-dark {
+  padding: 0;
+  border-top: 0;
+}
+
+.operation-section .feature-copy p {
+  color: var(--navy-muted);
+}
+
+.operation-section .feature-copy .feature-tagline {
+  color: var(--white);
+}
+
+.operation-section .text-link {
+  border-bottom-color: var(--white);
+  color: var(--white);
+}
+
+.operation-section .text-link:hover {
+  border-bottom-color: var(--yellow);
+  color: var(--yellow);
+}
+
+@media (min-width: 761px) {
+  .feature {
+    grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+    gap: clamp(36px, 6vw, 88px);
+  }
+
+  .feature-flip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  }
+
+  .feature-flip .feature-figure {
+    order: 2;
+  }
+}
+
+@media (min-width: 1041px) {
+  .feature {
+    padding: 96px 0;
+  }
+
+  .feature-in-dark {
+    padding: 0;
+  }
+
+  .feature-copy h2 {
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem);
+  }
+}
+

@@ -7,6 +7,14 @@ const navigation = [
   { href: "#candado", label: "Candado satelital" },
 ];
 
+// Fotos de custodia para el carrusel "Custodia en operación".
+// Para agregar una foto: copiarla a public/assets/ y añadir una línea aquí (cuadrada, sin recortar).
+// El carrusel solo se muestra con 3 fotos o más, para no rellenar con imágenes repetidas.
+const custodyPhotos = [
+  { src: "/assets/servicio-seguridad-fisica.webp", alt: "Tres guardias KGB con casco, chaleco y equipo táctico frente a camionetas de la base de operaciones. Mensaje: Prevención real, no solo presencia." },
+];
+const showCustodyGallery = custodyPhotos.length >= 3;
+
 const serviceOptions = [
   "Seguridad física",
   "Seguridad electrónica",
@@ -138,6 +146,27 @@ const contact = {
         </div>
       </section>
 
+      {showCustodyGallery && (
+        <section class="operation-section" id="operacion" aria-labelledby="operacion-title">
+          <div class="gallery" data-gallery>
+            <h2 id="operacion-title">Custodia en operación</h2>
+            <div class="gallery-track" role="region" aria-roledescription="carrusel" aria-label="Fotos de custodia" tabindex="0">
+              {custodyPhotos.map((photo) => (
+                <figure class="gallery-item">
+                  <div class="service-shot-frame">
+                    <img src={photo.src} alt={photo.alt} width="1192" height="1191" loading="lazy" decoding="async" />
+                  </div>
+                </figure>
+              ))}
+            </div>
+            <div class="gallery-controls" data-gallery-controls>
+              <button class="gallery-arrow" type="button" data-dir="-1" aria-label="Foto anterior"><span aria-hidden="true">←</span></button>
+              <button class="gallery-arrow" type="button" data-dir="1" aria-label="Foto siguiente"><span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div class="contact-copy">
           <h2 id="contact-title">Hablemos de tu operación.</h2>
@@ -208,6 +237,55 @@ const contact = {
     </footer>
   </div>
 </BaseLayout>
+
+<script>
+  const gallery = document.querySelector<HTMLElement>("[data-gallery]");
+  const galleryTrack = gallery?.querySelector<HTMLElement>(".gallery-track");
+
+  if (gallery && galleryTrack) {
+    const controls = gallery.querySelector<HTMLElement>("[data-gallery-controls]");
+    const buttons = Array.from(gallery.querySelectorAll<HTMLButtonElement>(".gallery-arrow"));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const step = () => {
+      const item = galleryTrack.querySelector<HTMLElement>(".gallery-item");
+      const gap = parseFloat(getComputedStyle(galleryTrack).columnGap) || 0;
+      return (item?.getBoundingClientRect().width ?? galleryTrack.clientWidth) + gap;
+    };
+
+    const update = (position = galleryTrack.scrollLeft) => {
+      const max = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+      // Every photo already fits: no arrows needed.
+      if (controls) controls.hidden = max <= 2;
+      buttons[0].disabled = position <= 2;
+      buttons[1].disabled = position >= max - 2;
+    };
+
+    let settle: number | undefined;
+    const move = (direction: number) => {
+      const max = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+      const target = Math.min(max, Math.max(0, Math.round(galleryTrack.scrollLeft / step()) * step() + direction * step()));
+      galleryTrack.scrollTo({ left: target, behavior: reduceMotion ? "auto" : "smooth" });
+      update(target);
+      // Some browsers drop a smooth scroll that starts right after another; land it if so.
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        if (Math.abs(galleryTrack.scrollLeft - target) > 2) galleryTrack.scrollTo({ left: target, behavior: "auto" });
+      }, 900);
+    };
+
+    buttons.forEach((button) => button.addEventListener("click", () => move(Number(button.dataset.dir))));
+    galleryTrack.addEventListener("scroll", () => update(), { passive: true });
+    galleryTrack.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        event.preventDefault();
+        move(event.key === "ArrowRight" ? 1 : -1);
+      }
+    });
+    window.addEventListener("resize", () => update());
+    update();
+  }
+</script>
 
 <script>
   const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle");

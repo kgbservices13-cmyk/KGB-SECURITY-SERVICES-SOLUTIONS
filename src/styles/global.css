@@ -2287,3 +2287,158 @@ h2 {
   margin-top: 16px;
 }
 
+/* Custodia armada: the closing block, with a viewer that never covers the photo. */
+.feature-eyebrow {
+  margin: 0 0 12px;
+  color: var(--navy-muted);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.feature-eyebrow span {
+  margin-left: 6px;
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.viewer {
+  width: min(100%, 520px);
+  min-width: 0;
+}
+
+.viewer-stage {
+  margin: 0;
+}
+
+.viewer .gallery-track {
+  gap: 0;
+}
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.viewer-thumbs {
+  display: flex;
+  gap: 10px;
+}
+
+.viewer-thumbs[hidden] {
+  display: none;
+}
+
+.viewer-thumb {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 2px solid transparent;
+  background: transparent;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+
+.viewer-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.viewer-thumb:hover,
+.viewer-thumb[aria-current="true"] {
+  opacity: 1;
+}
+
+.viewer-thumb[aria-current="true"] {
+  border-color: var(--yellow);
+}
+
+.viewer-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.viewer-count {
+  margin-right: 6px;
+  color: var(--navy-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.viewer-count strong {
+  color: var(--white);
+}
+
+.viewer-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  font: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+}
+
+.viewer-arrow:hover:not(:disabled) {
+  border-color: var(--yellow);
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.viewer-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.viewer-arrow[hidden] {
+  display: none;
+}
+
+.viewer-arrow:focus-visible,
+.viewer-thumb:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+@media (min-width: 761px) {
+  .feature-in-dark {
+    grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  }
+}
+
+/* Tablet: narrower photo column so the text of every service block keeps a readable width. */
+@media (min-width: 761px) and (max-width: 1040px) {
+  .feature,
+  .feature-in-dark {
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .feature-flip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  }
+
+  .feature-figure,
+  .viewer {
+    width: min(100%, 360px);
+  }
+
+  /* Full-bleed dark band, aligned with the page column. */
+  .operation-section {
+    width: 100vw;
+    margin-inline: calc((100% - 100vw) / 2) 0;
+    padding: 78px calc((100vw - 100%) / 2);
+  }
+}
+

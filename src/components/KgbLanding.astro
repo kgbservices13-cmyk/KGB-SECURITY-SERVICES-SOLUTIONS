@@ -106,26 +106,23 @@ const contact = {
     </div>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy" data-reveal>
-          <h1 id="hero-title">Nuestros servicios</h1>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#fisica">Ver los servicios <span aria-hidden="true">↓</span></a>
+      <!-- Versión anterior (afiche "Nuestros servicios"): commit c8ea68e, etiqueta git hero-afiche-v1. -->
+      <section class="stage" aria-labelledby="hero-title">
+        <div class="stage-inner">
+          <div class="stage-copy" data-reveal>
+            <h1 id="hero-title">Seguridad para tu carga, de origen a destino.</h1>
+            <p>Seguridad física, candado satelital y custodia armada terrestre y fluvial para importación y exportación.</p>
+            <div class="stage-actions">
+              <a class="button button-primary" href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
+              <a class="stage-link" href="#fisica">Ver los servicios <span aria-hidden="true">↓</span></a>
+            </div>
           </div>
+          <figure class="stage-photo" data-reveal style="--reveal-delay: 90ms">
+            <div class="service-shot-frame">
+              <img src="/assets/servicio-custodia-convoy.webp" alt="Convoy de tres camionetas KGB con guardias armados y cascos avanzando por un camino de tierra en el campo." width="1056" height="1056" loading="eager" fetchpriority="high" decoding="async" />
+            </div>
+          </figure>
         </div>
-
-        <figure class="hero-visual" data-reveal style="--reveal-delay: 90ms">
-          <div class="hero-image-frame">
-            <img class="hero-img-wide" src="/assets/servicio-listado-servicios.webp" alt="Afiche de KGB con el listado de servicios: seguridad física, seguridad electrónica y cámaras, candados satelitales, monitoreo, custodias armadas para importación y exportación, custodias fluviales, inspecciones K9 y pruebas poligráficas. Incluye guardias, un camión, contenedores en un puerto y una camioneta KGB." width="1153" height="824" loading="eager" fetchpriority="high" />
-          </div>
-          <ul class="hero-list" aria-label="Servicios principales">
-            <li>Seguridad física</li>
-            <li>Candado satelital</li>
-            <li>Custodia armada para importación y exportación</li>
-            <li>Custodia fluvial</li>
-          </ul>
-        </figure>
       </section>
 
       <section class="operation-section band-light" id="servicios-principales" aria-label="Seguridad física y candado satelital">
@@ -223,7 +220,6 @@ const contact = {
             </div>
           </div>
           <div class="feature-copy">
-            <p class="feature-eyebrow">Seguridad para tu carga, de origen a destino <span aria-hidden="true">/</span></p>
             <h2 id="custodia-title">Custodia armada</h2>
             <p>Custodia terrestre y fluvial para importación y exportación.</p>
             <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>

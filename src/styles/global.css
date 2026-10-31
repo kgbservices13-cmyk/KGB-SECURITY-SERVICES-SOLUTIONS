@@ -3483,3 +3483,110 @@ h2 {
   }
 }
 
+/* ==========================================================================
+   Hero: dark band with a clean photo (replaces the "Nuestros servicios" poster).
+   The photo keeps its square shape and is never cropped. Rollback: commit c8ea68e (tag hero-afiche-v1).
+   ========================================================================== */
+.stage {
+  width: 100vw;
+  margin-inline: calc((100% - 100vw) / 2);
+  padding: 44px calc((100vw - 100%) / 2) 52px;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.stage-inner {
+  display: grid;
+  gap: 36px;
+  align-items: center;
+}
+
+.stage-copy {
+  min-width: 0;
+}
+
+.stage h1 {
+  max-width: 14ch;
+  margin: 0 0 20px;
+  color: var(--white);
+  font-size: clamp(2.3rem, 9vw, 3.1rem);
+  line-height: 1.05;
+}
+
+.stage h1::before {
+  display: block;
+  width: 44px;
+  height: 5px;
+  margin-bottom: 22px;
+  background: var(--yellow);
+  content: "";
+}
+
+.stage-copy p {
+  max-width: 460px;
+  margin: 0 0 30px;
+  color: var(--navy-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.stage-link {
+  padding: 8px 0;
+  border-bottom: 2px solid rgb(255 255 255 / 45%);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.stage-link:hover {
+  border-color: var(--yellow);
+}
+
+.stage-photo {
+  width: min(100%, 400px);
+  min-width: 0;
+  margin: 0;
+}
+
+@media (min-width: 761px) {
+  .stage {
+    padding-block: 64px 72px;
+  }
+
+  .stage-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    gap: clamp(40px, 7vw, 112px);
+  }
+
+  .stage h1 {
+    font-size: clamp(2.6rem, 4.4vw, 4.4rem);
+  }
+
+  .stage-photo {
+    width: 100%;
+    justify-self: end;
+  }
+}
+
+/* Tablet: stack the hero (text, then photo) so the title keeps a comfortable width. */
+@media (min-width: 761px) and (max-width: 1040px) {
+  .stage-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .stage-photo {
+    width: min(100%, 420px);
+    justify-self: start;
+  }
+}
+

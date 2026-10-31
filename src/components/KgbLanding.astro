@@ -20,30 +20,30 @@ const moreServices = [
     name: "Seguridad electrónica y monitoreo",
     text: "Cámaras, sensores y monitoreo.",
     images: [
-      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea." },
+      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.", title: "Monitoreo", text: "Cámaras y operadores vigilando tu carga y tus instalaciones, incluso mientras tú descansas." },
     ],
   },
   {
     name: "Inspección K9 y de contenedores",
     text: "Inspecciones K9 de sustancias sujetas a fiscalización.",
     images: [
-      { src: "/assets/servicio-unidad-canina.webp", alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
-      { src: "/assets/servicio-unidad-canina-cacao.webp", alt: "Guía KGB con un perro K9 revisando sacos de cacao en un puerto. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
-      { src: "/assets/servicio-unidad-canina-camaron.webp", alt: "Guía KGB con un perro K9 revisando cajas de camarón junto a contenedores. Mensaje: Tu primera línea de defensa tiene cuatro patas." },
-      { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta revisando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores." },
+      { src: "/assets/servicio-unidad-canina.webp", alt: "Guía KGB con un perro K9 revisando cajas de banano en un muelle. Mensaje: Tu primera línea de defensa tiene cuatro patas.", title: "K9 en banano", text: "Guía y perro K9 revisan la carga de banano en el muelle en busca de sustancias sujetas a fiscalización." },
+      { src: "/assets/servicio-unidad-canina-cacao.webp", alt: "Guía KGB con un perro K9 revisando sacos de cacao en un puerto. Mensaje: Tu primera línea de defensa tiene cuatro patas.", title: "K9 en cacao", text: "Inspección K9 de sacos de cacao en puerto para detectar sustancias sujetas a fiscalización." },
+      { src: "/assets/servicio-unidad-canina-camaron.webp", alt: "Guía KGB con un perro K9 revisando cajas de camarón junto a contenedores. Mensaje: Tu primera línea de defensa tiene cuatro patas.", title: "K9 en camarón", text: "Inspección K9 de cajas de camarón junto a los contenedores, antes de que la carga salga." },
+      { src: "/assets/servicio-inspeccion-contenedores.webp", alt: "Personal KGB con chaleco, linterna y tableta revisando un contenedor en el puerto. Mensaje: Inspección y verificación de contenedores.", title: "Inspección de contenedores", text: "Revisión y verificación del contenedor en el puerto, con registro de lo inspeccionado." },
     ],
   },
   {
     name: "Pruebas poligráficas",
     text: "",
     images: [
-      { src: "/assets/servicio-poligrafia.webp", alt: "Examen de poligrafía en una oficina con una examinadora KGB tomando notas. Mensaje: La confianza se gana. La verdad se comprueba." },
+      { src: "/assets/servicio-poligrafia.webp", alt: "Examen de poligrafía en una oficina con una examinadora KGB tomando notas. Mensaje: La confianza se gana. La verdad se comprueba.", title: "Pruebas poligráficas", text: "Exámenes de poligrafía aplicados por personal KGB para comprobar la confianza de tu equipo." },
     ],
   },
 ];
 
 // Servicios complementarios: una diapositiva por foto, con el nombre y la descripción de su servicio.
-const complementary = moreServices.flatMap((service) => service.images.map((image) => ({ ...image, name: service.name, text: service.text })));
+const complementary = moreServices.flatMap((service) => service.images.map((image) => ({ ...image, name: service.name, text: service.text, backTitle: image.title, backText: image.text })));
 
 const serviceOptions = [
   "Seguridad física",
@@ -239,9 +239,20 @@ const contact = {
               complementary.map((slide) => (
                 <li class="marquee-item" aria-hidden={copy === 1 ? "true" : undefined}>
                   <figure>
-                    <div class="service-shot-frame">
-                      <img src={slide.src} alt={copy === 1 ? "" : slide.alt} width="1192" height="1191" loading="lazy" decoding="async" />
-                    </div>
+                    <button class="flip" type="button" aria-pressed="false" tabindex={copy === 1 ? -1 : undefined} aria-label={`${slide.backTitle}: ver descripción del servicio`}>
+                      <span class="flip-inner">
+                        <span class="flip-face flip-front">
+                          <span class="service-shot-frame">
+                            <img src={slide.src} alt={copy === 1 ? "" : slide.alt} width="1192" height="1191" loading="lazy" decoding="async" />
+                          </span>
+                        </span>
+                        <span class="flip-face flip-back" aria-hidden="true">
+                          <span class="flip-title">{slide.backTitle}</span>
+                          <span class="flip-text">{slide.backText}</span>
+                          <span class="flip-back-hint">Toca para volver a la imagen</span>
+                        </span>
+                      </span>
+                    </button>
                     <figcaption>
                       <strong>{slide.name}</strong>
                       {slide.text && <span>{slide.text}</span>}
@@ -253,8 +264,7 @@ const contact = {
           </ul>
         </div>
         <div class="marquee-actions">
-          <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
-          <button class="marquee-toggle" type="button" data-marquee-toggle aria-pressed="false">Pausar movimiento</button>
+          <a class="button button-primary" href="#contact">Cotizar servicios complementarios <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -328,17 +338,6 @@ const contact = {
     </footer>
   </div>
 </BaseLayout>
-
-<script>
-  // Servicios complementarios: the strip moves by itself; it stops on hover, focus or when the visitor asks.
-  const marquee = document.querySelector<HTMLElement>("[data-marquee]");
-  const marqueeToggle = document.querySelector<HTMLButtonElement>("[data-marquee-toggle]");
-  marqueeToggle?.addEventListener("click", () => {
-    const paused = marquee?.classList.toggle("is-paused") ?? false;
-    marqueeToggle.setAttribute("aria-pressed", String(paused));
-    marqueeToggle.textContent = paused ? "Reanudar movimiento" : "Pausar movimiento";
-  });
-</script>
 
 <script>
   document.querySelectorAll<HTMLButtonElement>(".flip").forEach((card) => {

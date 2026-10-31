@@ -3311,3 +3311,32 @@ h2 {
   color: var(--muted);
 }
 
+/* Servicios complementarios: tapping a photo turns it over; the strip waits while one is open.
+   The old pause button is gone. Rollback point: commit 5fee9cf. */
+.marquee:has(.flip.is-flipped) .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item .flip-back {
+  gap: 10px;
+  padding: 22px;
+}
+
+.marquee-item .flip-title {
+  font-size: 1.25rem;
+}
+
+.marquee-item .flip-title::before {
+  margin-bottom: 12px;
+}
+
+.marquee-item .flip-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.marquee-actions {
+  justify-content: flex-start;
+  margin-top: 36px;
+}
+

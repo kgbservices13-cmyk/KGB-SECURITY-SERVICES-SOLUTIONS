@@ -3094,3 +3094,15 @@ h2 {
   }
 }
 
+
+/* Seguridad física y Candado satelital: smaller photos so the band takes less room.
+   Rollback point: commit 27b304e (554px photos). */
+.twin-item .feature-figure {
+  max-width: 400px;
+}
+
+@media (max-width: 760px) {
+  .twin-item .feature-figure {
+    max-width: 300px;
+  }
+}

@@ -2722,3 +2722,104 @@ h2 {
   }
 }
 
+/* ==========================================================================
+   Visual refinement (preserve mode): colour rhythm, two-column services band,
+   brand accent bar, tinted elevation. No copy, link or image changes.
+   Rollback point: commit 797ecea.
+   ========================================================================== */
+:root {
+  --band: #e8eef1;
+}
+
+/* One accent: the brand yellow bar above every section title. */
+.hero h1::before,
+.twin-copy h2::before,
+.more h2::before,
+.contact-copy h2::before {
+  display: block;
+  width: 44px;
+  height: 5px;
+  margin-bottom: 20px;
+  background: var(--yellow);
+  content: "";
+}
+
+/* Services band: light cool tint between the paper hero and the navy custody block. */
+.operation-section.band-light {
+  background: var(--band);
+  color: var(--ink);
+  padding-block: clamp(64px, 8vw, 104px);
+}
+
+.operation-section.band-light .feature-copy p {
+  color: var(--muted);
+}
+
+.operation-section.band-light .feature-copy .feature-tagline {
+  color: var(--ink);
+}
+
+.operation-section.band-light .feature-copy .text-link {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.operation-section.band-light .feature-copy .text-link:hover {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
+}
+
+.twin {
+  display: grid;
+  gap: 64px;
+}
+
+.twin-item {
+  min-width: 0;
+}
+
+.twin-item .feature-figure {
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 28px;
+}
+
+.twin-copy h2 {
+  margin-bottom: 14px;
+}
+
+@media (min-width: 761px) {
+  .twin {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(36px, 6vw, 96px);
+    align-items: start;
+  }
+}
+
+/* Hero title with more presence next to the poster. */
+@media (min-width: 1041px) {
+  .hero h1 {
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.04;
+  }
+}
+
+/* The form card is the one elevated surface: tinted shadow, never pure black. */
+.contact-form {
+  box-shadow: 0 1px 0 rgb(7 26 45 / 5%), 0 28px 56px -28px rgb(7 26 45 / 22%);
+}
+
+/* Tactile feedback on the outline buttons. */
+.feature-copy .text-link:active,
+.more-text .text-link:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-copy .text-link:active,
+  .more-text .text-link:active {
+    transform: none;
+  }
+}
+

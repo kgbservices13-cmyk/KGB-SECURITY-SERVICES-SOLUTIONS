@@ -329,10 +329,10 @@ const contact = {
         <img src="/assets/kgb-logo-v2.png" alt="KGB Security Services & Solutions" width="300" height="110" />
       </a>
       <div class="footer-links">
-        <a href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer">WhatsApp {contact.whatsappPrimary.display}</a>
-        <a href={contact.conventional.href}>Teléfono {contact.conventional.display}</a>
-        <a href={`mailto:${contact.commercialEmail}`}>{contact.commercialEmail}</a>
-        <a href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer">Instagram @kgb.ec</a>
+        <a class="footer-button" href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer"><span class="footer-button-label">WhatsApp</span><span class="footer-button-value">{contact.whatsappPrimary.display}</span></a>
+        <a class="footer-button" href={contact.conventional.href}><span class="footer-button-label">Teléfono</span><span class="footer-button-value">{contact.conventional.display}</span></a>
+        <a class="footer-button" href={`mailto:${contact.commercialEmail}`}><span class="footer-button-label">Correo</span><span class="footer-button-value">{contact.commercialEmail}</span></a>
+        <a class="footer-button" href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer"><span class="footer-button-label">Instagram</span><span class="footer-button-value">@kgb.ec</span></a>
       </div>
       <p class="footer-legal">© {new Date().getFullYear()} KGB Security Services & Solutions</p>
     </footer>
@@ -342,10 +342,15 @@ const contact = {
 <script>
   document.querySelectorAll<HTMLButtonElement>(".flip").forEach((card) => {
     const back = card.querySelector<HTMLElement>(".flip-back");
+    const inStrip = card.closest(".marquee") !== null;
+    let resume: number | undefined;
     card.addEventListener("click", () => {
       const flipped = card.classList.toggle("is-flipped");
       card.setAttribute("aria-pressed", String(flipped));
       back?.setAttribute("aria-hidden", String(!flipped));
+      // In the moving strip a description stays open only a few seconds, then the strip resumes.
+      window.clearTimeout(resume);
+      if (inStrip && flipped) resume = window.setTimeout(() => card.click(), 6000);
     });
   });
 

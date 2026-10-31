@@ -3340,3 +3340,76 @@ h2 {
   margin-top: 36px;
 }
 
+/* Servicios complementarios: no pause on hover (the strip resumes on its own after a flipped photo).
+   Keyboard users still get a stop while a photo has focus. Rollback point: commit 5bced9d. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: running;
+}
+
+.marquee:has(.flip:focus-visible) .marquee-track,
+.marquee:has(.flip.is-flipped) .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Footer contact: four buttons instead of a text list. */
+.footer-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.footer-links .footer-button {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px;
+  border: 2px solid var(--navy);
+  background: transparent;
+  color: var(--navy);
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.footer-button-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.footer-button-value {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.footer-links .footer-button:hover,
+.footer-links .footer-button:focus-visible {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.footer-links .footer-button:hover .footer-button-label,
+.footer-links .footer-button:focus-visible .footer-button-label {
+  color: var(--navy-muted);
+}
+
+.footer-links .footer-button:active {
+  transform: translateY(1px);
+}
+
+@media (min-width: 761px) {
+  .footer-links {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 14px;
+    justify-content: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-links .footer-button:active {
+    transform: none;
+  }
+}
+

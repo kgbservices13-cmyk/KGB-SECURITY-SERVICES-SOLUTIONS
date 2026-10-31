@@ -2995,8 +2995,6 @@ h2 {
 .marquee {
   overflow: hidden;
   margin-top: 8px;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
 }
 
 .marquee-track {
@@ -3084,8 +3082,6 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .marquee {
     overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 
   .marquee-track {

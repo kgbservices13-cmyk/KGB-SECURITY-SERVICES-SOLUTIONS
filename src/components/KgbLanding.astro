@@ -42,6 +42,9 @@ const moreServices = [
   },
 ];
 
+// Servicios complementarios: una diapositiva por foto, con el nombre y la descripción de su servicio.
+const complementary = moreServices.flatMap((service) => service.images.map((image) => ({ ...image, name: service.name, text: service.text })));
+
 const serviceOptions = [
   "Seguridad física",
   "Custodia armada",
@@ -218,30 +221,29 @@ const contact = {
       </section>
 
       <section class="more" id="mas-servicios" aria-labelledby="mas-title">
-        <h2 id="mas-title">Más servicios</h2>
-        <div class="more-list">
-          {moreServices.map((service) => (
-            <details class="more-item" name="mas-servicios">
-              <summary>
-                <h3>{service.name}</h3>
-                <span class="more-icon" aria-hidden="true"></span>
-              </summary>
-              <div class="more-body">
-                <div class="more-text">
-                  {service.text && <p>{service.text}</p>}
-                  <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
-                </div>
-                <div class={service.images.length > 1 ? "more-media more-media-grid" : "more-media"}>
-                  {service.images.map((image) => (
+        <h2 id="mas-title">Servicios complementarios</h2>
+        <div class="marquee" data-marquee>
+          <ul class="marquee-track" aria-label="Servicios complementarios">
+            {[0, 1].map((copy) =>
+              complementary.map((slide) => (
+                <li class="marquee-item" aria-hidden={copy === 1 ? "true" : undefined}>
+                  <figure>
                     <div class="service-shot-frame">
-                      <img data-src={image.src} alt={image.alt} width="1192" height="1191" decoding="async" />
-                      <noscript><img src={image.src} alt={image.alt} width="1192" height="1191" /></noscript>
+                      <img src={slide.src} alt={copy === 1 ? "" : slide.alt} width="1192" height="1191" loading="lazy" decoding="async" />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </details>
-          ))}
+                    <figcaption>
+                      <strong>{slide.name}</strong>
+                      {slide.text && <span>{slide.text}</span>}
+                    </figcaption>
+                  </figure>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+        <div class="marquee-actions">
+          <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
+          <button class="marquee-toggle" type="button" data-marquee-toggle aria-pressed="false">Pausar movimiento</button>
         </div>
       </section>
 
@@ -317,15 +319,13 @@ const contact = {
 </BaseLayout>
 
 <script>
-  // "Más servicios": each photo is downloaded only when its row is opened.
-  document.querySelectorAll<HTMLDetailsElement>(".more-item").forEach((item) => {
-    item.addEventListener("toggle", () => {
-      if (!item.open) return;
-      item.querySelectorAll<HTMLImageElement>("img[data-src]").forEach((image) => {
-        image.src = image.dataset.src ?? "";
-        image.removeAttribute("data-src");
-      });
-    });
+  // Servicios complementarios: the strip moves by itself; it stops on hover, focus or when the visitor asks.
+  const marquee = document.querySelector<HTMLElement>("[data-marquee]");
+  const marqueeToggle = document.querySelector<HTMLButtonElement>("[data-marquee-toggle]");
+  marqueeToggle?.addEventListener("click", () => {
+    const paused = marquee?.classList.toggle("is-paused") ?? false;
+    marqueeToggle.setAttribute("aria-pressed", String(paused));
+    marqueeToggle.textContent = paused ? "Reanudar movimiento" : "Pausar movimiento";
   });
 </script>
 

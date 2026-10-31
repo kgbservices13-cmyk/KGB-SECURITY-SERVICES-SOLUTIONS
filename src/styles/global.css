@@ -2988,3 +2988,113 @@ h2 {
   }
 }
 
+/* ==========================================================================
+   Servicios complementarios: automatic strip, left to right, every photo
+   square and uncropped. Rollback point: commit 768beee (accordion).
+   ========================================================================== */
+.marquee {
+  overflow: hidden;
+  margin-top: 8px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: marquee-ltr 48s linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee.is-paused .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  width: clamp(240px, 24vw, 340px);
+  margin-right: 28px;
+}
+
+.marquee-item figure {
+  margin: 0;
+}
+
+.marquee-item figcaption {
+  display: grid;
+  gap: 4px;
+  padding-top: 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.marquee-item figcaption strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.marquee-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 32px;
+}
+
+.marquee-toggle {
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 2px solid var(--line);
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.marquee-toggle:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.marquee-toggle:focus-visible {
+  outline: 2px solid var(--blue-deep);
+  outline-offset: 3px;
+}
+
+/* Moves from the left edge toward the right: the strip is two identical copies. */
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* No automatic motion: the strip becomes a swipeable row and the duplicates disappear. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  .marquee-item[aria-hidden="true"],
+  .marquee-toggle {
+    display: none;
+  }
+}
+

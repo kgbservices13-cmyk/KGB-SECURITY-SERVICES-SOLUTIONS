@@ -2989,7 +2989,7 @@ h2 {
 }
 
 /* ==========================================================================
-   Servicios complementarios: automatic strip, left to right, every photo
+   Servicios complementarios: automatic strip, right to left, every photo
    square and uncropped. Rollback point: commit 768beee (accordion).
    ========================================================================== */
 .marquee {
@@ -3005,7 +3005,7 @@ h2 {
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: marquee-ltr 48s linear infinite;
+  animation: marquee-rtl 48s linear infinite;
 }
 
 .marquee:hover .marquee-track,
@@ -3069,14 +3069,14 @@ h2 {
   outline-offset: 3px;
 }
 
-/* Moves from the left edge toward the right: the strip is two identical copies. */
-@keyframes marquee-ltr {
+/* Moves from the right edge toward the left: the strip is two identical copies. */
+@keyframes marquee-rtl {
   from {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
 
   to {
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
 }
 

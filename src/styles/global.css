@@ -2823,3 +2823,70 @@ h2 {
   }
 }
 
+
+/* ==========================================================================
+   "Más servicios": each row is a white panel with a clear open state.
+   CSS only, no copy, link or image changes. Rollback point: commit bf14260.
+   ========================================================================== */
+.more-list {
+  display: grid;
+  gap: 14px;
+  border-top: 0;
+}
+
+.more-item {
+  border: 1px solid var(--line);
+  background: var(--white);
+  box-shadow: inset 5px 0 0 transparent;
+  transition: box-shadow 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+
+.more-item:hover {
+  border-color: var(--navy);
+}
+
+.more-item[open] {
+  border-color: var(--navy);
+  box-shadow: inset 5px 0 0 var(--yellow), 0 24px 48px -30px rgb(7 26 45 / 25%);
+}
+
+.more-item summary {
+  padding: 24px clamp(20px, 3vw, 36px);
+}
+
+.more-item h3 {
+  font-size: clamp(1.2rem, 3.6vw, 1.65rem);
+}
+
+.more-item summary:hover h3 {
+  color: var(--navy);
+}
+
+.more-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--navy);
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.more-icon::before,
+.more-icon::after {
+  top: 17px;
+  left: 9px;
+  background: var(--navy);
+}
+
+.more-item[open] .more-icon {
+  background: var(--navy);
+}
+
+.more-item[open] .more-icon::before,
+.more-item[open] .more-icon::after {
+  background: var(--white);
+}
+
+.more-body {
+  margin: 0 clamp(20px, 3vw, 36px);
+  padding: 28px 0 36px;
+  border-top: 1px solid var(--line);
+}

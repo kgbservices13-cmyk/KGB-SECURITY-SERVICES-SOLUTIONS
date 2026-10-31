@@ -3295,3 +3295,19 @@ h2 {
     padding-block: 80px;
   }
 }
+
+/* Custodia armada viewer: the back of each photo is light so it stands out on the navy band.
+   Rollback point: commit 50f1bef. */
+.viewer .flip-back {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.viewer .flip-title {
+  color: var(--navy);
+}
+
+.viewer .flip-back-hint {
+  color: var(--muted);
+}
+

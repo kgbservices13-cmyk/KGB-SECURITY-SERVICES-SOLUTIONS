@@ -3240,3 +3240,58 @@ h2 {
   }
 }
 
+
+/* ==========================================================================
+   Vertical rhythm: tighter section padding so no band leaves empty space.
+   Spacing only; no copy, link or image changes. Rollback point: commit 1d35f62.
+   ========================================================================== */
+.hero {
+  min-height: 0;
+  padding-block: 40px 48px;
+}
+
+.operation-section.band-light {
+  padding-block: 48px;
+}
+
+.operation-section {
+  padding-block: 56px;
+}
+
+.twin {
+  gap: 44px;
+}
+
+.more {
+  padding: 48px 0;
+}
+
+.contact-section {
+  padding-block: 56px;
+}
+
+@media (min-width: 761px) {
+  .hero {
+    padding-block: 56px 64px;
+  }
+
+  .operation-section.band-light {
+    padding-block: 64px;
+  }
+
+  .operation-section {
+    padding-block: 72px;
+  }
+
+  .twin {
+    gap: clamp(36px, 6vw, 96px);
+  }
+
+  .more {
+    padding: 48px 0;
+  }
+
+  .contact-section {
+    padding-block: 80px;
+  }
+}

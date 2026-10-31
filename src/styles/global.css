@@ -3644,3 +3644,42 @@ h2 {
   }
 }
 
+/* ==========================================================================
+   Hero scene: guards standing in front of containers and cranes (composed from the client's images).
+   Wide image from 901px up, tall image below it. Rollback: commit b6ce019 (tag hero-foto-fondo-v1).
+   ========================================================================== */
+.stage {
+  align-items: flex-start;
+  min-height: calc(400px + 64.3vw);
+}
+
+.stage-bg {
+  object-position: 50% 100%;
+}
+
+.stage::before {
+  background: linear-gradient(180deg, rgb(7 26 45 / 94%) 0%, rgb(7 26 45 / 82%) 42%, rgb(7 26 45 / 0%) 66%);
+}
+
+@media (min-width: 901px) {
+  .stage {
+    align-items: center;
+    min-height: clamp(540px, 42vw, 720px);
+  }
+
+  .stage-bg {
+    object-position: 100% 100%;
+  }
+
+  .stage::before {
+    background: linear-gradient(90deg, rgb(7 26 45 / 95%) 0%, rgb(7 26 45 / 88%) 32%, rgb(7 26 45 / 30%) 50%, rgb(7 26 45 / 0%) 60%);
+  }
+}
+
+
+/* Mid widths: keep the text clear of the first guard. */
+@media (min-width: 901px) and (max-width: 1240px) {
+  .stage-copy p {
+    max-width: 340px;
+  }
+}

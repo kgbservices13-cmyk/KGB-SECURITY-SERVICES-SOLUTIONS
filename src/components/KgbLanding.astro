@@ -106,9 +106,12 @@ const contact = {
     </div>
 
     <main>
-      <!-- Versiones anteriores: afiche = commit c8ea68e (tag hero-afiche-v1); foto en recuadro = commit 3143dfd (tag hero-foto-recuadro-v1). -->
+      <!-- Versiones anteriores: afiche = commit c8ea68e (tag hero-afiche-v1); foto en recuadro = commit 3143dfd (tag hero-foto-recuadro-v1); convoy de fondo = commit b6ce019 (tag hero-foto-fondo-v1). -->
       <section class="stage" aria-labelledby="hero-title">
-        <img class="stage-bg" src="/assets/servicio-custodia-convoy.webp" alt="" width="1056" height="1056" loading="eager" fetchpriority="high" decoding="async" />
+        <picture>
+          <source media="(max-width: 900px)" srcset="/assets/hero-puerto-guardias-movil.webp" width="900" height="1680" />
+          <img class="stage-bg" src="/assets/hero-puerto-guardias.webp" alt="Tres guardias KGB armados, de pie frente a contenedores apilados y grúas en un puerto." width="1920" height="806" loading="eager" fetchpriority="high" decoding="async" />
+        </picture>
         <div class="stage-inner">
           <div class="stage-copy" data-reveal>
             <h1 id="hero-title">Seguridad para tu carga, de origen a destino.</h1>

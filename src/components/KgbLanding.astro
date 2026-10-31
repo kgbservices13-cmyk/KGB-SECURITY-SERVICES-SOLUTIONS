@@ -20,7 +20,7 @@ const moreServices = [
     name: "Seguridad electrónica y monitoreo",
     text: "Cámaras, sensores y monitoreo.",
     images: [
-      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.", title: "Monitoreo", text: "Cámaras y operadores vigilando tu carga y tus instalaciones, incluso mientras tú descansas." },
+      { src: "/assets/servicio-centro-monitoreo.webp", alt: "Centro de monitoreo KGB con pantallas de cámaras sobre un puerto y operadores con diadema. Mensaje: Mientras tú duermes, KGB no parpadea.", title: "Seguridad electrónica y monitoreo", text: "Cámaras, sensores y operadores vigilando tu carga y tus instalaciones, incluso mientras tú descansas." },
     ],
   },
   {
@@ -45,10 +45,25 @@ const moreServices = [
 // Servicios complementarios: una diapositiva por foto, con el nombre y la descripción de su servicio.
 const complementary = moreServices.flatMap((service) => service.images.map((image) => ({ ...image, name: service.name, text: service.text, backTitle: image.title, backText: image.text })));
 
+// Lista de la primera sección: los servicios del afiche, escritos como texto y enlazados a su sección.
+const heroServices = [
+  { href: "#fisica", label: "Seguridad física" },
+  { href: "#mas-servicios", label: "Seguridad electrónica y cámaras" },
+  { href: "#candado", label: "Candados satelitales" },
+  { href: "#mas-servicios", label: "Servicio de monitoreo" },
+  { href: "#custodia", label: "Custodias armadas para importación y exportación" },
+  { href: "#custodia", label: "Custodias fluviales" },
+  { href: "#mas-servicios", label: "Inspecciones K9 de sustancias sujetas a fiscalización" },
+  { href: "#mas-servicios", label: "Pruebas poligráficas" },
+];
+
 const serviceOptions = [
   "Seguridad física",
   "Custodia armada",
   "Candado satelital",
+  "Seguridad electrónica y monitoreo",
+  "Inspección K9 y de contenedores",
+  "Pruebas poligráficas",
   "Otro servicio u orientación",
 ];
 
@@ -109,13 +124,15 @@ const contact = {
       <!-- Versiones anteriores: afiche = commit c8ea68e (tag hero-afiche-v1); foto en recuadro = commit 3143dfd (tag hero-foto-recuadro-v1); convoy de fondo = commit b6ce019 (tag hero-foto-fondo-v1). -->
       <section class="stage" aria-labelledby="hero-title">
         <picture>
-          <source media="(max-width: 900px)" srcset="/assets/hero-puerto-guardias-movil.webp" width="900" height="1680" />
+          <source media="(max-width: 1000px)" srcset="/assets/hero-puerto-guardias-movil.webp" width="900" height="2200" />
           <img class="stage-bg" src="/assets/hero-puerto-guardias.webp" alt="Tres guardias KGB armados, de pie frente a contenedores apilados y grúas en un puerto." width="1920" height="806" loading="eager" fetchpriority="high" decoding="async" />
         </picture>
         <div class="stage-inner">
           <div class="stage-copy" data-reveal>
-            <h1 id="hero-title">Seguridad para tu carga, de origen a destino.</h1>
-            <p>Seguridad física, candado satelital y custodia armada terrestre y fluvial para importación y exportación.</p>
+            <h1 id="hero-title">Nuestros servicios</h1>
+            <ul class="stage-services">
+              {heroServices.map((service) => <li><a href={service.href}>{service.label}</a></li>)}
+            </ul>
             <div class="stage-actions">
               <a class="button button-primary" href="#contact">Solicitar cotización <span aria-hidden="true">↗</span></a>
               <a class="stage-link" href="#fisica">Ver los servicios <span aria-hidden="true">↓</span></a>
@@ -219,6 +236,7 @@ const contact = {
             </div>
           </div>
           <div class="feature-copy">
+            <p class="feature-eyebrow">Seguridad para tu carga, de origen a destino <span aria-hidden="true">/</span></p>
             <h2 id="custodia-title">Custodia armada</h2>
             <p>Custodia terrestre y fluvial para importación y exportación.</p>
             <a class="text-link" href="#contact">Cotizar este servicio <span aria-hidden="true">↗</span></a>
@@ -249,8 +267,7 @@ const contact = {
                       </span>
                     </button>
                     <figcaption>
-                      <strong>{slide.name}</strong>
-                      {slide.text && <span>{slide.text}</span>}
+                      <strong>{slide.backTitle}</strong>
                     </figcaption>
                   </figure>
                 </li>

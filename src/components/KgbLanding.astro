@@ -329,10 +329,10 @@ const contact = {
         <img src="/assets/kgb-logo-v2.png" alt="KGB Security Services & Solutions" width="300" height="110" />
       </a>
       <div class="footer-links">
-        <a class="footer-button" href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer"><span class="footer-button-label">WhatsApp</span><span class="footer-button-value">{contact.whatsappPrimary.display}</span></a>
-        <a class="footer-button" href={contact.conventional.href}><span class="footer-button-label">Teléfono</span><span class="footer-button-value">{contact.conventional.display}</span></a>
-        <a class="footer-button" href={`mailto:${contact.commercialEmail}`}><span class="footer-button-label">Correo</span><span class="footer-button-value">{contact.commercialEmail}</span></a>
-        <a class="footer-button" href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer"><span class="footer-button-label">Instagram</span><span class="footer-button-value">@kgb.ec</span></a>
+        <a class="footer-button" href={contact.whatsappPrimary.href} target="_blank" rel="noreferrer" aria-label={`WhatsApp ${contact.whatsappPrimary.display}`}><span class="footer-icon" style="--icon: url(/icons/whatsapp.svg)" aria-hidden="true"></span>{contact.whatsappPrimary.display}</a>
+        <a class="footer-button" href={contact.conventional.href} aria-label={`Teléfono ${contact.conventional.display}`}><span class="footer-icon" style="--icon: url(/icons/phone.svg)" aria-hidden="true"></span>{contact.conventional.display}</a>
+        <a class="footer-button" href={`mailto:${contact.commercialEmail}`} aria-label={`Correo ${contact.commercialEmail}`}><span class="footer-icon" style="--icon: url(/icons/gmail.svg)" aria-hidden="true"></span>{contact.commercialEmail}</a>
+        <a class="footer-button" href="https://www.instagram.com/kgb.ec/" target="_blank" rel="noreferrer" aria-label="Instagram @kgb.ec"><span class="footer-icon" style="--icon: url(/icons/instagram.svg)" aria-hidden="true"></span>@kgb.ec</a>
       </div>
       <p class="footer-legal">© {new Date().getFullYear()} KGB Security Services & Solutions</p>
     </footer>

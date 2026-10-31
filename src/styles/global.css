@@ -3413,3 +3413,59 @@ h2 {
   }
 }
 
+/* Footer contact, simplified: a small icon and the data, no boxes.
+   Rollback point: commit f486d9b (four outlined buttons). Icons: Simple Icons (WhatsApp, Gmail, Instagram) and Phosphor (phone). */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 28px;
+}
+
+.footer-links .footer-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.footer-links .footer-button:hover,
+.footer-links .footer-button:focus-visible {
+  background: none;
+  color: var(--blue-deep);
+}
+
+.footer-icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+@media (min-width: 761px) {
+  .footer-links {
+    display: flex;
+    justify-content: flex-end;
+    align-self: center;
+  }
+}
+
+
+.footer-links {
+  justify-content: flex-start;
+}
+
+@media (min-width: 761px) {
+  .footer-links {
+    justify-content: flex-end;
+  }
+}

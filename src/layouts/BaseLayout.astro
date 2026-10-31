@@ -27,9 +27,30 @@ const {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preload" href="/fonts/Outfit-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/IBMPlexSans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/kgb-logo-v2.png" as="image" />
+    <script is:inline>
+      // The logo intro plays once per visit; later page loads in the same tab skip it.
+      try {
+        if (sessionStorage.getItem("kgb-intro")) document.documentElement.classList.add("no-intro");
+        else sessionStorage.setItem("kgb-intro", "1");
+      } catch (e) {}
+    </script>
     <title>{title}</title>
   </head>
   <body>
+    <div class="intro" aria-hidden="true" data-intro>
+      <div class="intro-door intro-door-left"></div>
+      <div class="intro-door intro-door-right"></div>
+      <div class="intro-mark">
+        <img class="intro-logo" src="/assets/kgb-logo-v2.png" alt="" width="1508" height="554" />
+        <span class="intro-bar"></span>
+      </div>
+    </div>
+    <script is:inline>
+      document.querySelector("[data-intro]")?.addEventListener("click", function (event) {
+        event.currentTarget.classList.add("is-skipped");
+      });
+    </script>
     <slot />
   </body>
 </html>

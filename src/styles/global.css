@@ -3130,3 +3130,113 @@ h2 {
     grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
   }
 }
+
+/* ==========================================================================
+   Logo intro: the KGB mark appears, a yellow line draws under it, then the two
+   panels open like a lock and the page is revealed. Plays once per visit,
+   about 3 seconds, click to skip. Pure CSS: it removes itself even if scripts fail.
+   ========================================================================== */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  animation: intro-gone 0.01s linear 3.1s forwards;
+}
+
+.intro.is-skipped,
+.no-intro .intro {
+  display: none;
+}
+
+.intro-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2%;
+  background: var(--paper);
+  animation: intro-open 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.1s forwards;
+}
+
+.intro-door-left {
+  left: 0;
+  --slide: -101%;
+}
+
+.intro-door-right {
+  right: 0;
+  --slide: 101%;
+}
+
+.intro-mark {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  width: clamp(230px, 34vw, 420px);
+  animation: intro-mark-out 0.5s ease-in 2.05s forwards;
+}
+
+.intro-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  animation: intro-logo-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.intro-bar {
+  display: block;
+  width: 0;
+  height: 5px;
+  background: var(--yellow);
+  animation: intro-bar-draw 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.9s forwards;
+}
+
+@keyframes intro-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-bar-draw {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes intro-mark-out {
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes intro-open {
+  to {
+    transform: translateX(var(--slide));
+  }
+}
+
+@keyframes intro-gone {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}
+

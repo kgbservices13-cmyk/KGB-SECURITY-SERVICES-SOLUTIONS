@@ -2890,3 +2890,101 @@ h2 {
   padding: 28px 0 36px;
   border-top: 1px solid var(--line);
 }
+
+/* ==========================================================================
+   Flip cards: tapping a service photo turns it over to a short description.
+   Same square size as the photo, so nothing is cropped or shifted.
+   Rollback point: commit 97a17b7.
+   ========================================================================== */
+.flip {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  perspective: 1400px;
+}
+
+.flip:focus-visible {
+  outline: 3px solid var(--blue-deep);
+  outline-offset: 4px;
+}
+
+.flip-inner {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.flip.is-flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  display: block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-front .service-shot-frame {
+  display: block;
+}
+
+.flip-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: clamp(24px, 5vw, 44px);
+  border-left: 6px solid var(--yellow);
+  background: var(--navy);
+  color: var(--white);
+  transform: rotateY(180deg);
+}
+
+.flip-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.flip-title::before {
+  display: block;
+  width: 44px;
+  height: 5px;
+  margin-bottom: 18px;
+  background: var(--yellow);
+  content: "";
+}
+
+.flip-text {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.flip-back-hint {
+  margin-top: 8px;
+  color: var(--navy-muted);
+  font-size: 0.85rem;
+}
+
+.flip-hint {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transition: none;
+  }
+}
+
